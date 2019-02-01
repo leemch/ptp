@@ -11,17 +11,16 @@ const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 
 // Load user model
-const User = require("../../models/User");
-const Client = require("../../models/Client");
+const Trainer = require("../../models/Trainer");
 
-//@route   GET api/users/test
-//@desc    Tests users router
+//@route   GET api/trainers/test
+//@desc    Tests trainers router
 //@access  Public
 
-router.get("/test", (req, res) => res.json("Users works"));
+router.get("/test", (req, res) => res.json("Trainers works"));
 
-//@route   GET api/users/register
-//@desc    Trainer Register
+//@route   GET api/trainers/register
+//@desc    Register trainer
 //@access  Public
 
 router.post("/register", (req, res) => {
@@ -46,21 +45,12 @@ router.post("/register", (req, res) => {
 				rating: "pg", //rating
 				d: "mm", //default
 			})
-
-
-			
-
-
 			const newUser = new User({
 				name: req.body.name,
 				email: req.body.email,
-				avatar: req.body.avatar,
-				password: req.body.password,
-				isTrainer: req.body.isTrainer,
-				clients: []
+				avatar,
+				password: req.body.password
 			});
-
-
 
 			bcrypt.genSalt(10, (err, salt) => {
 				bcrypt.hash(newUser.password, salt, (err, hash) =>{
@@ -68,60 +58,6 @@ router.post("/register", (req, res) => {
 					newUser.password = hash;
 					newUser.save()
 					.then(user => res.json(user))
-					.catch(err => console.log(err));
-				})
-			})
-		}
-	})
-
-});
-
-//@route   GET api/users/register
-//@desc    Client Register
-//@access  Public
-
-router.post("/client_register/:trainer_id", (req, res) => {
-
-	const {errors, isValid} = validateRegisterInput(req.body);
-
-	// Check validation
-	//console.log(isValid);
-	if(!isValid){
-		return res.status(400).json(errors);
-	}
-	Client.findOne({email: req.body.email})
-	.then(user => {
-		if(user){
-			errors.email = "Email already exists"
-			return res.status(400).json(errors);
-		}
-		else{
-
-
-
-			const avatar = gravatar.url(req.body.email, {
-				s: "200", // size
-				rating: "pg", //rating
-				d: "mm", //default
-			})
-			const newClient = new Client({
-				name: req.body.name,
-				email: req.body.email,
-				avatar: req.body.avatar,
-				password: req.body.password,
-			});
-
-
-
-			bcrypt.genSalt(10, (err, salt) => {
-				bcrypt.hash(newClient.password, salt, (err, hash) =>{
-					if(err) throw err;
-					newClient.password = hash;
-					newClient.save()
-					.then(client => {
-						
-						res.json(client)
-					})
 					.catch(err => console.log(err));
 				})
 			})
@@ -164,7 +100,7 @@ User.findOne({email: req.body.email})
 				if(isMatch){
 					// User Matched
 
-					const payload = {id: user.id, name: user.name, avatar: user.avatar, isTrainer: user.isTrainer}  //Create JWT payload
+					const payload = {id: user.id, name: user.name, avatar: user.avatar}  //Create JWT payload
 
 					//Sign token
 					jwt.sign(

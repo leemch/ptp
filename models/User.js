@@ -19,6 +19,10 @@ const UserSchema = new Schema({
 		type: String,
 		required: true
 	},
+	isTrainer: {
+		type: Boolean,
+		default: true
+	},
 
 	avatar:{
 		type: String,
@@ -27,7 +31,48 @@ const UserSchema = new Schema({
 	date:{
 		type: Date,
 		default: Date.now
-	}
+	},
+	clients: [
+		{
+			client: {
+				type: Schema.Types.ObjectId,
+				ref: clients,
+			},
+			macros: {
+				fat: {
+					type: String
+				},
+				protein: {
+					type: String
+				},
+				carbs: {
+					type: String
+				}
+			},
+			progress_updates: [
+				{
+					date:{
+						type: Date,
+						default: Date.now,
+					},
+					weight:{
+						type: String,
+					},
+					macros:{
+						fat: {
+							type: String
+						},
+						protein: {
+							type: String
+						},
+						carbs: {
+							type: String
+						}
+					}
+				}
+			]
+		}
+	]
 
 });
 
