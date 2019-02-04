@@ -20,7 +20,7 @@ const Client = require("../../models/Client");
 
 router.get("/test", (req, res) => res.json("Users works"));
 
-//@route   GET api/users/register
+//@route   POST api/users/register
 //@desc    Trainer Register
 //@access  Public
 
@@ -76,7 +76,7 @@ router.post("/register", (req, res) => {
 
 });
 
-//@route   GET api/users/register
+//@route   POST api/users/client_register
 //@desc    Client Register
 //@access  Public
 
@@ -89,15 +89,18 @@ router.post("/client_register/:trainer_id", (req, res) => {
 	if(!isValid){
 		return res.status(400).json(errors);
 	}
+
+	
+	/////////////////////////////////////////////
 	Client.findOne({email: req.body.email})
-	.then(user => {
-		if(user){
+	.then(client => {
+		if(client){
 			errors.email = "Email already exists"
 			return res.status(400).json(errors);
 		}
 		else{
 
-
+			
 
 			const avatar = gravatar.url(req.body.email, {
 				s: "200", // size
@@ -109,6 +112,7 @@ router.post("/client_register/:trainer_id", (req, res) => {
 				email: req.body.email,
 				avatar: req.body.avatar,
 				password: req.body.password,
+				current_trainer: null
 			});
 
 
@@ -119,6 +123,24 @@ router.post("/client_register/:trainer_id", (req, res) => {
 					newClient.password = hash;
 					newClient.save()
 					.then(client => {
+							User.findById(req.params.trainer_id)
+							.then(trainer => {
+								if(!trainer){
+								errors.email = "Trainer does not exist"
+								return res.status(400).json(errors);
+							}
+							else {
+								const trainerNewClient = {
+									client: client._id,
+									progress_update: []
+								}
+								trainer.clients.unshift(trainerNewClient);
+
+								trainer.save();
+								client.current_trainer = req.params.trainer_id;
+								client.save();
+								}
+							})
 						
 						res.json(client)
 					})
@@ -127,13 +149,14 @@ router.post("/client_register/:trainer_id", (req, res) => {
 			})
 		}
 	})
+	/////////////////////////////////////////////////////
 
 });
 
 
 
-//@route   GET api/users/login
-//@desc    Login User/ Returning token
+//@route   POST api/users/login
+//@desc    Trainer Login User/ Returning token
 //@access  Public
 
 router.post("/login", (req, res) => {
@@ -164,7 +187,7 @@ User.findOne({email: req.body.email})
 				if(isMatch){
 					// User Matched
 
-					const payload = {id: user.id, name: user.name, avatar: user.avatar, isTrainer: user.isTrainer}  //Create JWT payload
+					const payload = {id: user.id, name: user.name, avatar: user.avatar, isTrainer: false}  //Create JWT payload
 
 					//Sign token
 					jwt.sign(
@@ -189,6 +212,86 @@ User.findOne({email: req.body.email})
 });
 
 
+//@route   POST api/users/client_login
+//@desc    Client login / Returning token
+//@access  Public
+
+router.post("/client_login/:trainer_id", (req, res) => {
+
+	const {errors, isValid} = validateLoginInput(req.body);
+
+	// Check validation
+	if(!isValid){
+		return res.status(400).json(errors);
+	}
+
+const email = req.body.email;
+const password = req.body.password;
+
+// Find user by email
+
+Client.findOne({email: req.body.email})
+.then(client =>{	
+	if (!client){
+		errors.email = "client not found";
+		return res.status(400).json({email: "client not found"});
+	}
+
+
+	User.findById(req.params.trainer_id)
+	.then(trainer => {
+		if(trainer){
+
+			//console.log(trainer.clients.filter(trainersClient => trainersClient.client === client._id));
+
+			if(trainer.clients.filter(trainersClient => trainersClient.client === client._id)){
+				
+				//Check password
+				bcrypt.compare(password, client.password)
+				.then(isMatch =>{
+					if(isMatch){
+						// client Matched
+
+						const payload = {id: client.id, name: client.name, avatar: client.avatar, isTrainer: false, current_trainer: trainer._id}  //Create JWT payload
+
+						//Sign token
+						jwt.sign(
+							payload, 
+							keys.secretOrKey, 
+							{expiresIn: 3600}, 
+							(err, token) => {
+								res.json({
+									success: true,
+									token: "Bearer " + token
+								});
+							});
+					}
+					else{
+						errors.password = "Password incorrect";
+						return res.status(400).json(errors);
+					}
+				});
+
+			}
+			else {
+				errors.client = "You are not a client of this trainer.";
+				return res.status(400).json(errors);
+			}
+		}
+		else {
+			return res.status(400).json({trainer: "trainer does not exist"});
+		}
+	})
+
+
+	
+
+	})
+	.catch(err => console.error(err));
+
+});
+
+
 //@route   GET api/users/current
 //@desc    Return current user
 //@access  Private
@@ -196,7 +299,9 @@ router.get("/current", passport.authenticate("jwt", {session: false}), (req, res
 	res.json({
 		id: req.user.id,
 		name: req.user.name,
-		email: req.user.email
+		email: req.user.email,
+		isTrainer: req.user.isTrainer,
+		current_trainer: req.user.current_trainer
 	});
 });
 

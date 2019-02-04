@@ -10,130 +10,69 @@ const passport = require("passport");
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 
-// Load user model
-const Trainer = require("../../models/Trainer");
+// Load client model
+const Client = require("../../models/Client");
+const Trainer = require("../../models/User");
 
-//@route   GET api/trainers/test
-//@desc    Tests trainers router
+//@route   GET api/clients/test
+//@desc    Tests clients router
 //@access  Public
 
-router.get("/test", (req, res) => res.json("Trainers works"));
-
-//@route   GET api/trainers/register
-//@desc    Register trainer
-//@access  Public
-
-router.post("/register", (req, res) => {
-
-	const {errors, isValid} = validateRegisterInput(req.body);
-
-	// Check validation
-	//console.log(isValid);
-	if(!isValid){
-		return res.status(400).json(errors);
-	}
-
-	User.findOne({email: req.body.email})
-	.then(user => {
-		if(user){
-			errors.email = "Email already exists"
-			return res.status(400).json(errors);
-		}
-		else{
-			const avatar = gravatar.url(req.body.email, {
-				s: "200", // size
-				rating: "pg", //rating
-				d: "mm", //default
-			})
-			const newUser = new User({
-				name: req.body.name,
-				email: req.body.email,
-				avatar,
-				password: req.body.password
-			});
-
-			bcrypt.genSalt(10, (err, salt) => {
-				bcrypt.hash(newUser.password, salt, (err, hash) =>{
-					if(err) throw err;
-					newUser.password = hash;
-					newUser.save()
-					.then(user => res.json(user))
-					.catch(err => console.log(err));
-				})
-			})
-		}
-	})
-
-});
+router.get("/test", (req, res) => res.json("Clients works"));
 
 
-
-//@route   GET api/users/login
-//@desc    Login User/ Returning token
-//@access  Public
-
-router.post("/login", (req, res) => {
-
-	const {errors, isValid} = validateLoginInput(req.body);
-
-	// Check validation
-	if(!isValid){
-		return res.status(400).json(errors);
-	}
-
-const email = req.body.email;
-const password = req.body.password;
-
-// Find user by email
-
-User.findOne({email: req.body.email})
-.then(user =>{
-
-	
-	if (!user){
-		errors.email = "User not found";
-		return res.status(400).json({email: "User not found"});
-	}
-	//Check password
-		bcrypt.compare(password, user.password)
-			.then(isMatch =>{
-				if(isMatch){
-					// User Matched
-
-					const payload = {id: user.id, name: user.name, avatar: user.avatar}  //Create JWT payload
-
-					//Sign token
-					jwt.sign(
-						payload, 
-						keys.secretOrKey, 
-						{expiresIn: 3600}, 
-						(err, token) => {
-							res.json({
-								success: true,
-								token: "Bearer " + token
-							});
-						});
-				}
-				else{
-					errors.password = "Password incorrect";
-					return res.status(400).json(errors);
-				}
-			});
-
-	});
-
-});
-
-
-//@route   GET api/users/current
-//@desc    Return current user
+//@route   POST api/clients/macros
+//@desc    Sets clients current macros from trainer
 //@access  Private
-router.get("/current", passport.authenticate("jwt", {session: false}), (req, res) => {
-	res.json({
-		id: req.user.id,
-		name: req.user.name,
-		email: req.user.email
-	});
+
+router.post("/macros", passport.authenticate("jwt", {session: false}), (req, res) => {
+	const client_id = req.user.id;
+	const trainer_id = req.user.current_trainer;
+
+
+
+	Trainer.findById(trainer_id)
+	.then(trainer => {
+		const clientIndex = trainer.clients.findIndex(trainersClient => trainersClient.client == client_id);
+		console.log(clientIndex);
+		const newMacros = {
+			fat: req.body.fat,
+			protein: req.body.protein,
+			carbs: req.body.carbs
+		}
+		
+		trainer.clients[clientIndex].macros = newMacros;
+		trainer.save().then(macros => res.json(newMacros));
+	})
+	.catch(err => console.error(err))
+
 });
+
+
+//@route   GET api/clients/macros
+//@desc    Gets current macros from trainer
+//@access  Private
+
+router.get("/macros", passport.authenticate("jwt", {session: false}), (req, res) => {
+	const client_id = req.user.id;
+	const trainer_id = req.user.current_trainer;
+
+	Trainer.findById(trainer_id)
+	.then(trainer => {
+		const clientInfo = trainer.clients.filter(trainersClient => trainersClient.client == client_id);
+
+		const macros = {
+			fat: clientInfo[0].macros.fat ? clientInfo[0].macros.fat : "",
+			protein: clientInfo[0].macros.protein ? clientInfo[0].macros.protein : "",
+			carbs: clientInfo[0].macros.carbs ? clientInfo[0].macros.carbs : ""
+		}
+		
+		res.json(macros);
+	});
+
+});
+
+
+
 
 module.exports = router;

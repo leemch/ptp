@@ -27,7 +27,11 @@ const ClientSchema = new Schema({
 	date:{
 		type: Date,
 		default: Date.now
-	}	
+	},
+	current_trainer: {
+		type: Schema.Types.ObjectId,
+		
+	}
 
 });
 

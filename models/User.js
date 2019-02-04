@@ -36,7 +36,7 @@ const UserSchema = new Schema({
 		{
 			client: {
 				type: Schema.Types.ObjectId,
-				ref: clients,
+				ref: "clients",
 			},
 			macros: {
 				fat: {
