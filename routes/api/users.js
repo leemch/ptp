@@ -187,7 +187,7 @@ User.findOne({email: req.body.email})
 				if(isMatch){
 					// User Matched
 
-					const payload = {id: user.id, name: user.name, avatar: user.avatar, isTrainer: false}  //Create JWT payload
+					const payload = {id: user.id, name: user.name, avatar: user.avatar, isTrainer: true}  //Create JWT payload
 
 					//Sign token
 					jwt.sign(

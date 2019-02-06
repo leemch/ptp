@@ -16,6 +16,7 @@ class CreateProfile extends Component {
 		this.state = {
 			displaySocialInputs: false,
 			handle: "",
+			signupcode: "",
 			company: "",
 			website: "",
 			location: "",
@@ -48,6 +49,7 @@ class CreateProfile extends Component {
 			const skillsCSV = profile.skills.join(",");
 
 			// If profile field doesnt exist, make empty string
+			profile.signupcode = !isEmpty(profile.signupcode) ? profile.signupcode : "";
 			profile.company = !isEmpty(profile.company) ? profile.company : "";
 			profile.website = !isEmpty(profile.website) ? profile.website : "";
 			profile.location = !isEmpty(profile.location) ? profile.location : "";
@@ -64,6 +66,7 @@ class CreateProfile extends Component {
 			// Set component fields state
 			this.setState({
 			handle: profile.handle,
+			signupcode: profile.signupcode,
 			company: profile.company,
 			website: profile.website,
 			location: profile.location,
@@ -87,6 +90,7 @@ class CreateProfile extends Component {
 		event.preventDefault();
 		const profileData = {
 			handle: this.state.handle,
+			signupcode: this.state.signupcode,
 			company: this.state.company,
 			website: this.state.website,
 			location: this.state.location,
@@ -99,6 +103,7 @@ class CreateProfile extends Component {
 			linkedin: this.state.linkedin,
 			youtube: this.state.youtube,
 			instagram: this.state.instagram
+			
 		}
 
 		this.props.createProfile(profileData, this.props.history);
@@ -186,6 +191,9 @@ class CreateProfile extends Component {
 
 								<TextFieldGroup placeholder = "* Profile Handle" name="handle" value={this.state.handle} onChange={this.onChange} error={errors.handle}
 								info="A unique handle for your profile URL. Your full name, company name, nickname" />
+
+								<TextFieldGroup placeholder = "* Sign up Code" name="signupcode" value={this.state.signupcode} onChange={this.onChange} error={errors.signupcode}
+								info="A unique code you must give to your clients for them to sign up with you." />
 
 								<SelectListGroup placeholder = "Status" name="status" value={this.state.status} onChange={this.onChange} error={errors.status}
 								info="What type of fitness professional are you?"

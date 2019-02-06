@@ -46,6 +46,12 @@ class Profile extends Component {
 					<ProfileAbout profile={profile} />
 					<ProfileCreds education={profile.education} experience={profile.experience}/>
 					<ProfileGithub />
+					<Link className="btn btn-dark" to={`/client_login/${profile.user._id}`}>
+						Client Log in
+					</Link>
+					<Link className="btn btn-dark" to={`/client_register/${profile.user._id}`}>
+						Sign up with this trainer
+					</Link>
 				</div>
 			)
 		}

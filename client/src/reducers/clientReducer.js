@@ -1,10 +1,8 @@
-import {GET_PROFILE, GET_PROFILES, PROFILE_LOADING, CLEAR_CURRENT_PROFILE} from "../actions/types";
+import {GET_PROFILE, GET_PROFILES, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_CLIENT_MACROS} from "../actions/types";
 
 
 const initialState ={
-	profile: null,
-	profiles: null,
-	loading: false
+	macros: {}
 }
 export default function(state = initialState, action){
 	switch(action.type){
@@ -14,10 +12,10 @@ export default function(state = initialState, action){
 				loading: true
 			}
 
-		case GET_PROFILE:
+		case GET_CLIENT_MACROS:
 		return{
 			...state,
-			profile: action.payload,
+			macros: action.payload,
 			loading: false
 		}
 

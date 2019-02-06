@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {LoginUser} from "../../actions/authActions";
+import {LoginClient} from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
 
-class Login extends Component {
+class ClientLogin extends Component {
 
 
 constructor() {
@@ -46,7 +46,7 @@ constructor() {
       email: this.state.email,
       password: this.state.password,
     }
-    this.props.LoginUser(user)
+    this.props.LoginClient(user, this.props.match.params.trainer_id);
   }
 
 
@@ -59,8 +59,8 @@ constructor() {
     <div className="container">
       <div className="row">
         <div className="col-md-8 m-auto">
-          <h1 className="display-4 text-center">Log In</h1>
-          <p className="lead text-center">Sign in to your PhysiqueTrainerPro account</p>
+          <h1 className="display-4 text-center">Client Log In</h1>
+          <p className="lead text-center">Log into your trainers page</p>
           <form onSubmit={this.onSubmit}>
             <TextFieldGroup
               placeholder="Email Address"
@@ -90,8 +90,8 @@ constructor() {
 	}
 }
 
-Login.propTypes = {
-  loginUser: PropTypes.func.isRequired,
+ClientLogin.propTypes = {
+  LoginClient: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 }
@@ -101,4 +101,4 @@ const mapStateToProps = (state) => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, {LoginUser})(Login);
+export default connect(mapStateToProps, {LoginClient})(ClientLogin);

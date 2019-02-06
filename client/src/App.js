@@ -13,6 +13,7 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
+import ClientLogin from './components/auth/ClientLogin';
 import Register from './components/auth/Register';
 import ClientRegister from './components/auth/ClientRegister';
 import Dashboard from './components/dashboard/Dashboard';
@@ -64,12 +65,15 @@ class App extends Component {
       <Provider store={store}>
       <Router>
       <div className="App">
+
         <Navbar />
+        
         <Route exact path="/" component={Landing} />
         <div className="container">
           <Route exact path="/register" component={Register} />
-          <Route exact path="/client_register" component={ClientRegister} />
+          <Route exact path="/client_register/:trainer_id" component={ClientRegister} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/client_login/:trainer_id" component={ClientLogin} />
           <Route exact path="/profiles" component={Profiles} />
           <Route exact path="/profile/:handle" component={Profile} />
 

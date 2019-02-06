@@ -118,6 +118,7 @@ router.post("/", passport.authenticate("jwt", {session: false}), (req, res) => {
 
 	profileFields.user = req.user.id;
 	if(req.body.handle) profileFields.handle = req.body.handle;
+	if(req.body.signupcode) profileFields.signupcode = req.body.signupcode;
 	if(req.body.company) profileFields.company = req.body.company;
 	if(req.body.website) profileFields.website = req.body.website;
 	if(req.body.location) profileFields.location = req.body.location;

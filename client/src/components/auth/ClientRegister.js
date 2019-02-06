@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from "prop-types";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
-import {registerUser} from "../../actions/authActions";
+import {registerClient} from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
 
 class Register extends Component {
@@ -13,7 +13,8 @@ class Register extends Component {
 			name: "",
 			email: "",
 			password: "",
-			password2: "",
+      password2: "",
+      signupcode: "",
 			errors: {}
 		}
 
@@ -43,10 +44,11 @@ class Register extends Component {
 			name: this.state.name,
 			email: this.state.email,
 			password: this.state.password,
-			password2: this.state.password2
+      password2: this.state.password2,
+      signupcode: this.state.signupcode
 		}
 
-		this.props.registerUser(newUser, this.props.history);
+		this.props.registerClient(newUser, this.props.match.params.trainer_id, this.props.history);
 
 		
 	}
@@ -97,6 +99,13 @@ class Register extends Component {
               onChange={this.onChange}
               error={errors.password2}
             />
+            <TextFieldGroup
+              placeholder="Sign Up Code"
+              name="signupcode"
+              value={this.state.signupcode}
+              onChange={this.onChange}
+              error={errors.signupcode}
+            />
             <input type="submit" className="btn btn-info btn-block mt-4" />
           </form>
         </div>
@@ -109,7 +118,7 @@ class Register extends Component {
 }
 
 Register.propTypes = {
-	registerUser: PropTypes.func.isRequired,
+	registerClient: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired
 }
@@ -119,4 +128,4 @@ const mapStateToProps = (state) => ({
 	errors: state.errors
 });
 
-export default connect(mapStateToProps, {registerUser})(withRouter(Register));
+export default connect(mapStateToProps, {registerClient})(withRouter(Register));
