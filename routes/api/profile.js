@@ -117,14 +117,14 @@ router.post("/", passport.authenticate("jwt", {session: false}), (req, res) => {
 	const profileFields = {};
 
 	profileFields.user = req.user.id;
-	if(req.body.handle) profileFields.handle = req.body.handle;
-	if(req.body.signupcode) profileFields.signupcode = req.body.signupcode;
-	if(req.body.company) profileFields.company = req.body.company;
-	if(req.body.website) profileFields.website = req.body.website;
-	if(req.body.location) profileFields.location = req.body.location;
-	if(req.body.bio) profileFields.bio = req.body.bio;
+	if(req.body.handle) profileFields.handle = req.body.handle; else profileFields.handle = "";
+	if(req.body.signupcode) profileFields.signupcode = req.body.signupcode; else profileFields.signupcode = "";
+	if(req.body.company) profileFields.company = req.body.company; else profileFields.company = "";
+	if(req.body.website) profileFields.website = req.body.website; else profileFields.website = "";
+	if(req.body.location) profileFields.location = req.body.location; else profileFields.location = "";
+	if(req.body.bio) profileFields.bio = req.body.bio; else profileFields.bio = "";
 	if(req.body.status) profileFields.status = req.body.status;
-	if(req.body.githubusername) profileFields.githubusername = req.body.githubusername;
+	if(req.body.githubusername) profileFields.githubusername = req.body.githubusername; else profileFields.githubusername = "";
 
 	// Skills - Split into array
 	if(typeof req.body.skills !== "undefined") {
@@ -133,11 +133,11 @@ router.post("/", passport.authenticate("jwt", {session: false}), (req, res) => {
 
 	// Social
 	profileFields.social = {};
-	if(req.body.youtube) profileFields.social.youtube = req.body.youtube;
-	if(req.body.twitter) profileFields.social.twitter = req.body.twitter;
-	if(req.body.facebook) profileFields.social.facebook = req.body.facebook;
-	if(req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
-	if(req.body.instagram) profileFields.social.instagram = req.body.instagram;
+	if(req.body.youtube) profileFields.social.youtube = req.body.youtube; else profileFields.social.youtube = "";
+	if(req.body.twitter) profileFields.social.twitter = req.body.twitter; else profileFields.social.twitter = "";
+	if(req.body.facebook) profileFields.social.facebook = req.body.facebook; else profileFields.social.facebook = "";
+	if(req.body.linkedin) profileFields.social.linkedin = req.body.linkedin; else profileFields.social.linkedin = "";
+	if(req.body.instagram) profileFields.social.instagram = req.body.instagram; else profileFields.social.instagram = "";
 
 	Profile.findOne({user: req.user.id})
 	.then(profile => {

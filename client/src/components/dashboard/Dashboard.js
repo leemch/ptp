@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {getCurrentProfile, deleteAccount} from "../../actions/profileActions";
+import {getCurrentProfile, getProfileById, deleteAccount} from "../../actions/profileActions";
 import Spinner from "../common/Spinner";
 import ProfileActions from "./ProfileActions";
 import Experience from "./Experience";
@@ -14,7 +14,12 @@ class Dashboard extends Component {
 
 
 	componentDidMount() {
-		this.props.getCurrentProfile();
+		if(this.props.auth.user.isTrainer){
+			this.props.getCurrentProfile();
+		}
+		else {
+			this.props.getProfileById(this.props.auth.user.current_trainer);
+		}
 	}
 
 	onDeleteClick(event){
@@ -62,12 +67,16 @@ class Dashboard extends Component {
 			}
 		}
 		else {
-			dashboardContent = (
-				<div>
-				{<ClientDashboard />}
+			if(profile === null || loading){
+				dashboardContent = <Spinner />;
+			} else {
+				dashboardContent = (
+					<div>
+					{<ClientDashboard profile={profile}/>}
 
-				</div>
-			);
+					</div>
+				);
+			}
 		}
 
 		return(
@@ -93,6 +102,7 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
 	getCurrentProfile: PropTypes.func.isRequired,
+	getProfileById: PropTypes.func.isRequired,
 	deleteAccount: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	profile: PropTypes.object.isRequired
@@ -103,4 +113,4 @@ const mapStateToProps = state => ({
 	auth: state.auth
 });
 
-export default connect(mapStateToProps, {getCurrentProfile, deleteAccount})(Dashboard);
+export default connect(mapStateToProps, {getCurrentProfile, getProfileById, deleteAccount})(Dashboard);

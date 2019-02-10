@@ -1,9 +1,10 @@
 import axios from "axios";
 
-import {GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_ERRORS, SET_CURRENT_USER, GET_PROFILES} from "./types";
+import {GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_ERRORS, SET_CURRENT_USER, GET_PROFILES, CLEAR_ERRORS} from "./types";
 
 // Get current profile
 export const getCurrentProfile = () => dispatch => {
+	dispatch(clearErrors());
 	dispatch(setProfileLoading());
 	axios.get("/api/profile")
 	.then(res => 
@@ -22,6 +23,7 @@ export const getCurrentProfile = () => dispatch => {
 
 // Get profile by handle
 export const getProfileByHandle = (handle) => dispatch => {
+	dispatch(clearErrors());
 	dispatch(setProfileLoading());
 	axios.get(`/api/profile/handle/${handle}`)
 	.then(res => 
@@ -33,13 +35,33 @@ export const getProfileByHandle = (handle) => dispatch => {
 	.catch(err => 
 		dispatch({
 			type: GET_PROFILE,
-			payload: null
+			payload: {}
+		})
+	)
+}
+
+// Get profile by ID
+export const getProfileById = (id) => dispatch => {
+	dispatch(clearErrors());
+	dispatch(setProfileLoading());
+	axios.get(`/api/profile/user/${id}`)
+	.then(res => 
+		dispatch({
+			type: GET_PROFILE,
+			payload: res.data
+		})
+	)
+	.catch(err => 
+		dispatch({
+			type: GET_PROFILE,
+			payload: {}
 		})
 	)
 }
 
 // Get all profiles
 export const getProfiles = () => dispatch => {
+	
 	dispatch(setProfileLoading());
 	axios.get("/api/profile/all")
 	.then(res => 
@@ -125,6 +147,7 @@ export const deleteAccount = () => dispatch => {
 
 // Create profile
 export const createProfile = (profileData, history) => (dispatch) => {
+	dispatch(clearErrors());
 	axios.post("/api/profile", profileData)
 	.then(result => history.push("/dashboard"))
 	.catch(err => dispatch({type: GET_ERRORS, payload: err.response.data}));
@@ -147,4 +170,11 @@ export const clearCurrentProfile = () => {
 		type: CLEAR_CURRENT_PROFILE
 	}
 }
+
+// Clear errors
+export const clearErrors = () => {
+	return {
+		type: CLEAR_ERRORS
+	}
+};
 

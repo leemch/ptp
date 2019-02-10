@@ -16,7 +16,7 @@ const ProfileSchema = new Schema({
 	},
 	signupcode: {
 		type: String,
-		required: true,
+		required: false,
 		max: 40
 	},
 	company: {

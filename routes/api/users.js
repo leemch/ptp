@@ -11,7 +11,7 @@ const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 
 // Load user model
-const User = require("../../models/User");
+const TrainerProfile = require("../../models/Profile");
 const Client = require("../../models/Client");
 
 //@route   GET api/users/test
@@ -80,7 +80,7 @@ router.post("/register", (req, res) => {
 //@desc    Client Register
 //@access  Public
 
-router.post("/client_register/:trainer_id", (req, res) => {
+router.post("/client_register/:handle", (req, res) => {
 
 	const {errors, isValid} = validateRegisterInput(req.body);
 
@@ -123,22 +123,23 @@ router.post("/client_register/:trainer_id", (req, res) => {
 					newClient.password = hash;
 					newClient.save()
 					.then(client => {
-							User.findById(req.params.trainer_id)
+							TrainerProfile.findOne({handle: req.params.handle})
+							.populate("user", ["name", "avatar"])
 							.then(trainer => {
 								if(!trainer){
 								errors.email = "Trainer does not exist"
 								return res.status(400).json(errors);
 							}
 							else {
-								const trainerNewClient = {
-									client: client._id,
-									progress_update: []
-								}
-								trainer.clients.unshift(trainerNewClient);
+									const trainerNewClient = {
+										client: client._id,
+										progress_update: []
+									}
+									trainer.clients.unshift(trainerNewClient);
 
-								trainer.save();
-								client.current_trainer = req.params.trainer_id;
-								client.save();
+									trainer.save();
+									client.current_trainer = trainer.user._id;
+									client.save();
 								}
 							})
 						

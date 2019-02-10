@@ -15,6 +15,7 @@ class CreateProfile extends Component {
 		this.state = {
 			displaySocialInputs: false,
 			handle: "",
+			signupcode: "",
 			company: "",
 			website: "",
 			location: "",

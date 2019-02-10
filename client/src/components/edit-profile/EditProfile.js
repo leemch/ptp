@@ -35,6 +35,7 @@ class CreateProfile extends Component {
 	}
 
 	componentDidMount() {
+
 		this.props.getCurrentProfile();
 	}
 
@@ -66,7 +67,7 @@ class CreateProfile extends Component {
 			// Set component fields state
 			this.setState({
 			handle: profile.handle,
-			signupcode: profile.signupcode,
+			//signupcode: profile.signupcode,
 			company: profile.company,
 			website: profile.website,
 			location: profile.location,
@@ -90,7 +91,7 @@ class CreateProfile extends Component {
 		event.preventDefault();
 		const profileData = {
 			handle: this.state.handle,
-			signupcode: this.state.signupcode,
+			//signupcode: this.state.signupcode,
 			company: this.state.company,
 			website: this.state.website,
 			location: this.state.location,

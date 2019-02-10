@@ -40,13 +40,16 @@ const UserSchema = new Schema({
 			},
 			macros: {
 				fat: {
-					type: String
+					type: String,
+					default: "0"
 				},
 				protein: {
-					type: String
+					type: String,
+					default: "0"
 				},
 				carbs: {
-					type: String
+					type: String,
+					default: "0"
 				}
 			},
 			progress_updates: [
