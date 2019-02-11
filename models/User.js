@@ -32,7 +32,7 @@ const UserSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
-	clients: [
+	client_list: [
 		{
 			client: {
 				type: Schema.Types.ObjectId,

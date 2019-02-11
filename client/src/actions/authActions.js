@@ -17,9 +17,21 @@ export const registerUser = (userData, history) => dispatch => {
 	);
 };
 
-// Register Client with trainer
-export const registerClient = (userData, trainerId, history) => dispatch => {
+// Register Client with trainer by Id
+export const registerClientById = (userData, trainerId, history) => dispatch => {
 	axios.post(`/api/users/client_register/${trainerId}`, userData)
+	.then(res => history.push("/login"))
+	.catch(err => dispatch({
+			type: GET_ERRORS,
+			payload: err.response.data
+		})
+	);
+};
+
+
+// Register Client By handle
+export const registerClientByHandle = (userData, trainerHandle, history) => dispatch => {
+	axios.post(`/api/users/client_register/${trainerHandle}`, userData)
 	.then(res => history.push("/login"))
 	.catch(err => dispatch({
 			type: GET_ERRORS,

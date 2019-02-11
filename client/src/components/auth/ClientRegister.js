@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from "prop-types";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
-import {registerClient} from "../../actions/authActions";
+import {registerClientByHandle} from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
 
 class Register extends Component {
@@ -48,7 +48,7 @@ class Register extends Component {
       signupcode: this.state.signupcode
 		}
 
-		this.props.registerClient(newUser, this.props.match.params.trainer_id, this.props.history);
+		this.props.registerClientByHandle(newUser, this.props.match.params.trainer_handle, this.props.history);
 
 		
 	}
@@ -118,7 +118,7 @@ class Register extends Component {
 }
 
 Register.propTypes = {
-	registerClient: PropTypes.func.isRequired,
+	registerClientByHandle: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired
 }
@@ -128,4 +128,4 @@ const mapStateToProps = (state) => ({
 	errors: state.errors
 });
 
-export default connect(mapStateToProps, {registerClient})(withRouter(Register));
+export default connect(mapStateToProps, {registerClientByHandle})(withRouter(Register));

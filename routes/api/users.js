@@ -13,6 +13,7 @@ const validateLoginInput = require("../../validation/login");
 // Load user model
 const TrainerProfile = require("../../models/Profile");
 const Client = require("../../models/Client");
+const User = require("../../models/User");
 
 //@route   GET api/users/test
 //@desc    Tests users router
@@ -57,7 +58,7 @@ router.post("/register", (req, res) => {
 				avatar: req.body.avatar,
 				password: req.body.password,
 				isTrainer: req.body.isTrainer,
-				clients: []
+				client_list: []
 			});
 
 
@@ -131,11 +132,17 @@ router.post("/client_register/:handle", (req, res) => {
 								return res.status(400).json(errors);
 							}
 							else {
+								//console.log(trainer);
 									const trainerNewClient = {
 										client: client._id,
 										progress_update: []
 									}
-									trainer.clients.unshift(trainerNewClient);
+									User.findById(trainer.user.id)
+									.then(user => {
+										user.client_list.unshift(trainerNewClient);
+										user.save();
+									});
+									
 
 									trainer.save();
 									client.current_trainer = trainer.user._id;
@@ -229,8 +236,7 @@ router.post("/client_login/:trainer_id", (req, res) => {
 const email = req.body.email;
 const password = req.body.password;
 
-// Find user by email
-
+// Find Client by email
 Client.findOne({email: req.body.email})
 .then(client =>{	
 	if (!client){
@@ -245,7 +251,7 @@ Client.findOne({email: req.body.email})
 
 			//console.log(trainer.clients.filter(trainersClient => trainersClient.client === client._id));
 
-			if(trainer.clients.filter(trainersClient => trainersClient.client === client._id)){
+			if(trainer.client_list.filter(trainersClient => trainersClient.client === client._id)){
 				
 				//Check password
 				bcrypt.compare(password, client.password)
@@ -290,6 +296,31 @@ Client.findOne({email: req.body.email})
 	})
 	.catch(err => console.error(err));
 
+});
+
+//@route   Get api/users/clients
+//@desc    Return all the trainers clients
+//@access  Private
+
+router.get("/clients",passport.authenticate("jwt", {session: false}), (req, res) =>{
+	const errors = {};
+
+
+
+	if(req.user.isTrainer){
+		User.findById(req.user.id)
+		.populate('client_list.client', ["name", "avatar"])
+		.then(trainer => {
+			
+			if(!trainer.client_list){
+				errors.noclients = "There are no clients";
+				return res.status(404).json(errors);
+			}
+				res.json(trainer.client_list)
+
+		})
+		.catch(err => console.error(err));
+	}
 });
 
 

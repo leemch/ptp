@@ -33,7 +33,7 @@ router.post("/macros", passport.authenticate("jwt", {session: false}), (req, res
 
 	Trainer.findById(trainer_id)
 	.then(trainer => {
-		const clientIndex = trainer.clients.findIndex(trainersClient => trainersClient.client == client_id);
+		const clientIndex = trainer.client_list.findIndex(trainersClient => trainersClient.client == client_id);
 		console.log(clientIndex);
 		const newMacros = {
 			fat: req.body.fat,
@@ -41,7 +41,7 @@ router.post("/macros", passport.authenticate("jwt", {session: false}), (req, res
 			carbs: req.body.carbs
 		}
 		
-		trainer.clients[clientIndex].macros = newMacros;
+		trainer.client_list[clientIndex].macros = newMacros;
 		trainer.save().then(macros => res.json(newMacros));
 	})
 	.catch(err => console.error(err))
@@ -59,7 +59,7 @@ router.get("/macros", passport.authenticate("jwt", {session: false}), (req, res)
 
 	Trainer.findById(trainer_id)
 	.then(trainer => {
-		const clientInfo = trainer.clients.filter(trainersClient => trainersClient.client == client_id);
+		const clientInfo = trainer.client_list.filter(trainersClient => trainersClient.client == client_id);
 
 		const macros = {
 			fat: clientInfo[0].macros.fat ? clientInfo[0].macros.fat : "",
