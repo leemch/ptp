@@ -43,11 +43,12 @@ class Dashboard extends Component {
 						<div>
 						<p className="lead text-muted"> Welcome <Link to={'/profile/' + profile.handle}>{user.name} </Link> 
 						</p>
-						<ProfileActions />
+						{/* <ProfileActions />
 						<Experience experience={profile.experience} />
 						<Education education={profile.education} />
 						<div style={{marginBottom: "60px"}} />
-						<button onClick={this.onDeleteClick.bind(this)} className="btn btn-danger"> Delete my Account</button>
+						<button onClick={this.onDeleteClick.bind(this)} className="btn btn-danger"> Delete my Account</button> */}
+						<Link to="/client_list" className="btn btn-success">My Clients</Link> 
 
 						</div>
 					);

@@ -4,11 +4,13 @@ import errorReducer from "./errorReducer";
 import profileReducer from "./profileReducer";
 import postReducer from "./postReducer";
 import clientReducer from "./clientReducer";
+import trainerReducer from "./trainerReducer";
 
 export default combineReducers({
 	auth: authReducer,
 	errors: errorReducer,
 	profile: profileReducer,
 	post: postReducer,
-	client: clientReducer
+	client: clientReducer,
+	trainer: trainerReducer
 });
