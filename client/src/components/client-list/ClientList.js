@@ -12,7 +12,8 @@ class ClientList extends Component {
 
 
 	state = {
-        clients: [],
+		clients: [],
+		searchBox: "",
         loading: true
     }
 
@@ -24,7 +25,19 @@ class ClientList extends Component {
 		})
         )
         .catch(err => console.error(err))
-    }
+	}
+	
+	onSearchChange = event => {
+		this.setState({searchBox: event.target.value});
+	}
+
+	filteredClients = () => {
+		const {searchBox} = this.state;
+		const {clients} = this.state;
+		return clients.filter(c => {
+			return c.client.name.toLowerCase().includes(searchBox.toLowerCase());
+		});
+	}
 
 render() {
 	const {clients, loading} = this.state;
@@ -35,7 +48,7 @@ render() {
 	}else {
 		if(clients.length > 0){
 			
-			clientItems = clients.map(client =>(
+			clientItems = this.filteredClients().map(client =>(
 				<ClientItem key={client.client._id} client={client} />
 			));
 		} else {
@@ -52,7 +65,7 @@ render() {
 							<p className="lead text-center">
 								View and manage your clients
 							</p>
-							<SearchBox />
+							<SearchBox searchChange={this.onSearchChange} searchfield={this.state.searchBox}/>
 							{clientItems}
 
 						</div>

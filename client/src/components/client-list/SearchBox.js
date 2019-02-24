@@ -8,7 +8,7 @@ const SearchBox = ({searchfield, searchChange}) =>{
 				<span className="input-group-text" id="basic-addon1">Search: </span>
 			</div>
 
-			<input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"></input>
+			<input value={searchfield} onChange={searchChange} type="text" class="form-control" placeholder="client name" aria-label="name" aria-describedby="basic-addon1"></input>
 		</div>
 
 
