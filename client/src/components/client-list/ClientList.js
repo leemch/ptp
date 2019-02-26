@@ -4,6 +4,7 @@ import Spinner from "../common/Spinner";
 import ClientItem from "./ClientItem";
 import axios from "axios";
 import SearchBox from "./SearchBox";
+import MacroModal from "./MacroModal";
 
 
 
@@ -14,7 +15,9 @@ class ClientList extends Component {
 	state = {
 		clients: [],
 		searchBox: "",
-        loading: true
+		loading: true,
+		macroModal: true,
+
     }
 
     componentDidMount() {
@@ -39,6 +42,10 @@ class ClientList extends Component {
 		});
 	}
 
+	onClickMacroModal = () => {
+		this.setState({macroModal: !this.state.macroModal});
+	}
+
 render() {
 	const {clients, loading} = this.state;
 	let clientItems;
@@ -49,7 +56,7 @@ render() {
 		if(clients.length > 0){
 			
 			clientItems = this.filteredClients().map(client =>(
-				<ClientItem key={client.client._id} client={client} />
+				<ClientItem key={client.client._id} client={client} id={client.client._id} />
 			));
 		} else {
 			clientItems = <h4>No clients found...</h4>
@@ -67,6 +74,7 @@ render() {
 							</p>
 							<SearchBox searchChange={this.onSearchChange} searchfield={this.state.searchBox}/>
 							{clientItems}
+							
 
 						</div>
 					</div>

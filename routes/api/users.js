@@ -55,7 +55,7 @@ router.post("/register", (req, res) => {
 			const newUser = new User({
 				name: req.body.name,
 				email: req.body.email,
-				avatar: req.body.avatar,
+				avatar: avatar,
 				password: req.body.password,
 				isTrainer: req.body.isTrainer,
 				client_list: []
@@ -323,6 +323,43 @@ router.get("/clients",passport.authenticate("jwt", {session: false}), (req, res)
 	}
 });
 
+
+//@route   POST api/users/macros/:client_id
+//@desc    Sets clients current macros from trainer
+//@access  Private
+
+router.post("/macros/:client_id", passport.authenticate("jwt", {session: false}), (req, res) => {
+	const trainer_id = req.user.id;
+	const isTrainer = req.user.isTrainer;
+	const client_id = req.params.client_id
+
+
+	if(isTrainer){
+
+		User.findById(trainer_id)
+		.then(trainer => {
+			const clientIndex = trainer.client_list.findIndex(trainersClient => trainersClient.client == client_id);
+			console.log(clientIndex);
+			const newMacros = {
+				fat: req.body.fat,
+				protein: req.body.protein,
+				carbs: req.body.carbs
+			}
+			
+			trainer.client_list[clientIndex].macros = newMacros;
+			trainer.save().then(macros => res.json(newMacros));
+		})
+		.catch(err => console.error(err))
+
+	} else {
+		return res.status(400).json("You are not a trainer");
+	}
+
+
+
+
+
+});
 
 //@route   GET api/users/current
 //@desc    Return current user

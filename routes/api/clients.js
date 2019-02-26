@@ -21,32 +21,7 @@ const Trainer = require("../../models/User");
 router.get("/test", (req, res) => res.json("Clients works"));
 
 
-//@route   POST api/clients/macros
-//@desc    Sets clients current macros from trainer
-//@access  Private
 
-router.post("/macros", passport.authenticate("jwt", {session: false}), (req, res) => {
-	const client_id = req.user.id;
-	const trainer_id = req.user.current_trainer;
-
-
-
-	Trainer.findById(trainer_id)
-	.then(trainer => {
-		const clientIndex = trainer.client_list.findIndex(trainersClient => trainersClient.client == client_id);
-		console.log(clientIndex);
-		const newMacros = {
-			fat: req.body.fat,
-			protein: req.body.protein,
-			carbs: req.body.carbs
-		}
-		
-		trainer.client_list[clientIndex].macros = newMacros;
-		trainer.save().then(macros => res.json(newMacros));
-	})
-	.catch(err => console.error(err))
-
-});
 
 
 //@route   GET api/clients/macros

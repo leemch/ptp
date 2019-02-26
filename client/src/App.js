@@ -29,6 +29,7 @@ import Post from './components/post/Post';
 import ClientList from './components/client-list/ClientList';
 
 import './App.css';
+import { setClientMacros } from './actions/trainerActions';
 
 // Check for token
 if(localStorage.jwtToken) {

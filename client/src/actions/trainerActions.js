@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import {GET_CLIENT_LIST} from "./types";
+import {GET_CLIENT_LIST, SET_CLIENT_MACROS, GET_ERRORS} from "./types";
 
 // Get current profile
 export const getCurrentClients = () => dispatch => {
@@ -17,4 +17,17 @@ export const getCurrentClients = () => dispatch => {
 			payload: {}
 		})
 	)
+}
+
+// Set Client Macros
+export const setClientMacros = (client_id, macros) => dispatch => {
+	axios.post(`/api/users/macros/${client_id}`, macros)
+	.then(res => 
+		console.log("Success")
+	)
+	.catch(err => dispatch({
+		type: GET_ERRORS,
+		payload: err.response.data
+	}))
+	
 }
