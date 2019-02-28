@@ -5,6 +5,7 @@ import profileReducer from "./profileReducer";
 import postReducer from "./postReducer";
 import clientReducer from "./clientReducer";
 import trainerReducer from "./trainerReducer";
+import progressUpdateReducer from "./progressUpdateReducer";
 
 export default combineReducers({
 	auth: authReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
 	profile: profileReducer,
 	post: postReducer,
 	client: clientReducer,
-	trainer: trainerReducer
+	trainer: trainerReducer,
+	progressUpdate: progressUpdateReducer
 });

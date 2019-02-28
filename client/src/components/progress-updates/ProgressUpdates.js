@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-import PostsForm from "./PostsForm";
-import PostFeed from "./PostFeed";
+import ProgressUpdateForm from "./PostsForm";
+import ProgressUpdateFeed from "./PostFeed";
 import Spinner from "../common/Spinner";
-import { getPosts } from "../../actions/postActions";
+import { getProgressUpdates } from "../../actions/postActions";
 
 
 class ProgressUpdates extends Component {
@@ -17,13 +17,13 @@ class ProgressUpdates extends Component {
 
 	render(){
 
-	const {posts, loading} = this.props.post;
-	let postContent;
+	const {progressUpdates, loading} = this.props.progressUpdate;
+	let progressUpdateContent;
 
-	if(posts === null || loading){
-		postContent = (<Spinner />);
+	if(progressUpdates === null || loading){
+		progressUpdateContent = (<Spinner />);
 	} else {
-		postContent = <PostFeed posts={posts} />;
+		progressUpdateContent = <ProgressUpdateFeed posts={progressUpdates} />;
 	}
 
 		return(
@@ -31,8 +31,8 @@ class ProgressUpdates extends Component {
 				<div className="container">
 					<div className="row">
 						<div className="col-md-12">
-							<PostsForm />
-							{postContent}
+							<ProgressUpdateForm />
+							{progressUpdateContent}
 						
 						</div>
 						
@@ -44,13 +44,13 @@ class ProgressUpdates extends Component {
 	}
 }
 
-Posts.propTypes = {
-	post: PropTypes.object.isRequired,
-	getPosts: PropTypes.func.isRequired
+ProgressUpdates.propTypes = {
+	progressUpdate: PropTypes.object.isRequired,
+	getProgressUpdates: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
-	post: state.post
+	progressUpdate: state.progressUpdate
 });
 
-export default connect(mapStateToProps, {getPosts})(Posts);
+export default connect(mapStateToProps, {getProgressUpdates})(ProgressUpdates);
