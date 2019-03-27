@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from "prop-types";
-import PostItem from "./PostItem";
+import ProgressUpdateItem from "./ProgressUpdateItem";
 
 
 class ProgressUpdateFeed extends Component {
 
 	render(){
-		const {posts} = this.props;
-		return posts.map(post => <PostItem key={post._id} post={post} />);
+		const {progressUpdates} = this.props;
+		return progressUpdates.map(progressUpdate => <ProgressUpdateItem key={progressUpdate._id} progressUpdate={progressUpdate} />);
 		
 	}
 
@@ -16,7 +16,7 @@ class ProgressUpdateFeed extends Component {
 
 
 ProgressUpdateFeed.propTypes = {
-	posts: PropTypes.array.isRequired
+	progressUpdates: PropTypes.array.isRequired
 }
 
 export default ProgressUpdateFeed;

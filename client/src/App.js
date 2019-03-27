@@ -30,6 +30,8 @@ import ClientList from './components/client-list/ClientList';
 
 import './App.css';
 import { setClientMacros } from './actions/trainerActions';
+import ProgressUpdates from './components/progress-updates/ProgressUpdates';
+import ProgressUpdateForm from './components/client/progress-update/ProgressUpdateForm';
 
 // Check for token
 if(localStorage.jwtToken) {
@@ -103,6 +105,14 @@ class App extends Component {
 
           <Switch>
             <PrivateRoute exact path="/client_list" component={ClientList} />
+          </Switch>
+
+          <Switch>
+            <PrivateRoute exact path="/progress_feed" component={ProgressUpdates} />
+          </Switch>
+
+          <Switch>
+            <PrivateRoute exact path="/progress_add" component={ProgressUpdateForm} />
           </Switch>
 
           <Route exact path="/not-found" component={NotFound} />

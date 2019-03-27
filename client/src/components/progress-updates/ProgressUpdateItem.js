@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import classnames from "classnames";
 import {Link} from "react-router-dom";
-import {deletePost, addLike, removeLike} from "../../actions/postActions";
+import {deleteProgressUpdate, addLike, removeLike} from "../../actions/progressUpdateActions";
 
 
 class ProgressUpdateItem extends Component {
@@ -33,39 +33,39 @@ class ProgressUpdateItem extends Component {
 
 
 	render(){
-		const {post, auth, showActions} = this.props;
+		const {progressUpdate, auth, showActions} = this.props;
 		return(
 			<div className="card card-body mb-3">
               <div className="row">
                 <div className="col-md-2">
                   <a href="profile.html">
-                    <img className="rounded-circle d-none d-md-block" src={post.avatar}
+                    <img className="rounded-circle d-none d-md-block" src={progressUpdate.avatar}
                       alt="" />
                   </a>
                   <br />
-                  <p className="text-center">{post.name}</p>
+                  <p className="text-center">{progressUpdate.name}</p>
                 </div>
                 <div className="col-md-10">
-                  <p className="lead">{post.text}</p>
+                  <p className="lead">{progressUpdate.text}</p>
 
 
                   {showActions ? (<span>
 
-                  	<button type="button" className="btn btn-light mr-1" onClick={this.onLikeClick.bind(this, post._id)}>
+                  	<button type="button" className="btn btn-light mr-1" onClick={this.onLikeClick.bind(this, progressUpdate._id)}>
                     <i className={classnames("fas fa-thumbs-up", {
-                    	"text-info": this.findUserLike(post.likes)
+                    	"text-info": this.findUserLike(progressUpdate.likes)
                     })} />
-                    <span className="badge badge-light">{post.likes.length}</span>
+                    <span className="badge badge-light">{progressUpdate.likes.length}</span>
                   </button>
-                  <button type="button" className="btn btn-light mr-1" onClick={this.onUnlikeClick.bind(this, post._id)}>
+                  <button type="button" className="btn btn-light mr-1" onClick={this.onUnlikeClick.bind(this, progressUpdate._id)}>
                     <i className="text-secondary fas fa-thumbs-down"></i>
                   </button>
-                  <Link to={`/post/${post._id}`} className="btn btn-info mr-1">
+                  <Link to={`/progressUpdate/${progressUpdate._id}`} className="btn btn-info mr-1">
                     Comments
                   </Link>
 					
-					{post.user === auth.user.id ? (
-						<button onClick={this.onDeleteClick.bind(this, post._id)} type="button" className="btn btn-danger mr-1">
+					{progressUpdate.user === auth.user.id ? (
+						<button onClick={this.onDeleteClick.bind(this, progressUpdate._id)} type="button" className="btn btn-danger mr-1">
 							<i className="fas fa-times" />
 						</button>
 					) : null}
@@ -79,14 +79,14 @@ class ProgressUpdateItem extends Component {
 	}
 }
 
-PostItem.defaultProps = {
+ProgressUpdateItem.defaultProps = {
 	showActions: true
 }
 
-PostItem.propTypes = {
-	post: PropTypes.object.isRequired,
+ProgressUpdateItem.propTypes = {
+	progressUpdate: PropTypes.object.isRequired,
 	auth: PropTypes.object.isRequired,
-	deletePost: PropTypes.func.isRequired,
+	deleteProgressUpdate: PropTypes.func.isRequired,
 	addLike: PropTypes.func.isRequired,
 	removeLike: PropTypes.func.isRequired
 }
@@ -95,4 +95,4 @@ const mapStateToProps = state => ({
 	auth: state.auth
 });
 
-export default connect(mapStateToProps, {deletePost, addLike, removeLike})(PostItem);
+export default connect(mapStateToProps, {deleteProgressUpdate, addLike, removeLike})(ProgressUpdateItem);

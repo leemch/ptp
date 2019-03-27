@@ -89,7 +89,7 @@ class Dashboard extends Component {
 
 					Training Split:
 					
-					<Link className="btn btn-primary" to={`/client_login/${profile.user._id}`}>
+					<Link className="btn btn-primary" to={`/progress_add/`}>
 					<i className="fas fa-share-square fa-2x" aria-hidden="true"></i>
 						Send Progress Update
 					</Link>

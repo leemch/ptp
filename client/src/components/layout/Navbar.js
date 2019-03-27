@@ -59,9 +59,9 @@ onLogoutClick(event) {
 
       <div className="collapse navbar-collapse" id="mobile-nav">
         <ul className="navbar-nav mr-auto">
-          {/* <li className="nav-item">
+           <li className="nav-item">
             <Link className="nav-link" to="/profiles"> Trainers </Link>
-          </li> */}
+          </li> 
         </ul>
 
         {isAuthenticated ? authLinks : guestLinks}

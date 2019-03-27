@@ -2,17 +2,17 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-import ProgressUpdateForm from "./PostsForm";
-import ProgressUpdateFeed from "./PostFeed";
+import ProgressUpdateForm from "./ProgressUpdateForm";
+import ProgressUpdateFeed from "./ProgressUpdateFeed";
 import Spinner from "../common/Spinner";
-import { getProgressUpdates } from "../../actions/postActions";
+import { getProgressUpdates } from "../../actions/progressUpdateActions";
 
 
 class ProgressUpdates extends Component {
 
 
 	componentDidMount(){
-		this.props.getPosts();
+		this.props.getProgressUpdates();
 	}
 
 	render(){
@@ -23,7 +23,7 @@ class ProgressUpdates extends Component {
 	if(progressUpdates === null || loading){
 		progressUpdateContent = (<Spinner />);
 	} else {
-		progressUpdateContent = <ProgressUpdateFeed posts={progressUpdates} />;
+		progressUpdateContent = <ProgressUpdateFeed progressUpdates={progressUpdates} />;
 	}
 
 		return(
@@ -31,7 +31,7 @@ class ProgressUpdates extends Component {
 				<div className="container">
 					<div className="row">
 						<div className="col-md-12">
-							<ProgressUpdateForm />
+							{/* <ProgressUpdateForm /> */}
 							{progressUpdateContent}
 						
 						</div>

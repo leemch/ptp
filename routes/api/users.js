@@ -111,7 +111,7 @@ router.post("/client_register/:handle", (req, res) => {
 			const newClient = new Client({
 				name: req.body.name,
 				email: req.body.email,
-				avatar: req.body.avatar,
+				avatar: avatar,
 				password: req.body.password,
 				current_trainer: null
 			});

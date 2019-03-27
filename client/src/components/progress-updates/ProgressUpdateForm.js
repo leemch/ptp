@@ -74,7 +74,7 @@ class ProgressUpdateForm extends Component {
 	}
 }
 
-PostsForm.propTypes = {
+ProgressUpdateForm.propTypes = {
 	addPost: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	errors:PropTypes.object.isRequired
@@ -85,4 +85,4 @@ const mapStateToProps = state => ({
 	errors: state.errors
 });
 
-export default connect(mapStateToProps, {addPost})(PostsForm);
+export default connect(mapStateToProps, {addPost})(ProgressUpdateForm);
