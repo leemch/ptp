@@ -19,6 +19,25 @@ export const addProgressUpdate = (progressData) => dispatch => {
 	);
 };
 
+
+//Add photo
+export const addPhoto = (progressData) => dispatch => {
+	dispatch(clearErrors());
+	axios.post(`/api/progress_updates/`, progressData)
+	.then(res => {
+		dispatch({
+			type: ADD_PROGRESS_UPDATE,
+			payload: res.data
+		})
+	})
+	.catch(err => dispatch({
+			type: GET_ERRORS,
+			payload: err.response.data
+		})
+	);
+};
+
+
 //Add like
 export const addLike = id => dispatch => {
 	axios.post(`/api/posts/like/${id}`)
