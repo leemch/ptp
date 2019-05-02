@@ -1,3 +1,6 @@
+.App {
+  background: url("./carbon_fibre.png");
+}
 
 img {
   width: 100%;
@@ -6,6 +9,7 @@ img {
 .landing {
   position: relative;
   background: url('./img/gym.jpg') no-repeat;
+  
   background-size: cover;
   background-position: center;
   height: 100vh;
