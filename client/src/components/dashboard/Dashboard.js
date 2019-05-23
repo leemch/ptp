@@ -8,6 +8,9 @@ import ProfileActions from "./ProfileActions";
 import Experience from "./Experience";
 import Education from "./Education";
 import ClientDashboard from "./ClientDashboard";
+import ClientList from "./client-list/ClientList";
+
+//import {Header, Icon} from "semantic-ui-react";
 
 
 class Dashboard extends Component {
@@ -48,7 +51,8 @@ class Dashboard extends Component {
 						<Education education={profile.education} />
 						<div style={{marginBottom: "60px"}} />
 						<button onClick={this.onDeleteClick.bind(this)} className="btn btn-danger"> Delete my Account</button> */}
-						<Link to="/client_list" className="btn btn-success">My Clients</Link> 
+						{/* <Link to="/client_list" className="btn btn-success">My Clients</Link>  */}
+						<ClientList />
 
 						</div>
 					);
@@ -86,7 +90,8 @@ class Dashboard extends Component {
 				<div className="container">
 					<div className="row">
 						<div className="col-md-12">
-							<h1 className="display-4"> Dashboard</h1>
+						
+							<h1 class> Dashboard</h1>
 							{dashboardContent}
 
 						</div>

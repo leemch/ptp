@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
-import Spinner from "../common/Spinner";
+import Spinner from "../../common/Spinner";
 import ClientItem from "./ClientItem";
 import axios from "axios";
 import SearchBox from "./SearchBox";
 import MacroModal from "./MacroModal";
+//import {Icon, Header} from "semantic-ui-react";
 
 
 
@@ -68,10 +69,6 @@ render() {
 				<div className="container">
 					<div className="row">
 						<div className="col-md-12">
-							<h1 className="display-4 text-center">Your Clients</h1>
-							<p className="lead text-center">
-								View and manage your clients
-							</p>
 							<SearchBox searchChange={this.onSearchChange} searchfield={this.state.searchBox}/>
 							{clientItems}
 							

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
-import isEmpty from "../../validation/isEmpty";
-import TextFieldGroup from "../common/TextFieldGroup";
-import {setClientMacros} from "../../actions/trainerActions";
+import isEmpty from "../../../validation/isEmpty";
+import TextFieldGroup from "../../common/TextFieldGroup";
+import {setClientMacros} from "../../../actions/trainerActions";
 
 
 
@@ -47,7 +47,7 @@ class ClientItem extends Component {
 
 
 		return(
-			<div className="card card-body bg-light mb-3">
+			<div className="card card-body bg-light mb-3 shadow-lg">
 				<div className="row">
 					<div className="col-2">
 						<img src={client.client.avatar} className="rounded-circle" alt="avatar" />

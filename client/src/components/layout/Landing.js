@@ -18,6 +18,7 @@ componentDidMount() {
       <div className="container">
         <div className="row">
           <div className="col-md-12 text-center">
+           <img src="https://s3.ca-central-1.amazonaws.com/physique-trainer-pro/1557381020523" alt="logo" className="img-fluid landing-logo"/> 
             <h1 className="display-3 mb-4">Physique Trainer Pro
             </h1>
             <p className="lead"> Create a trainer profile and get clients to sign up with you.</p>

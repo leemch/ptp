@@ -1,6 +1,3 @@
-.App {
-  background: url("./carbon_fibre.png");
-}
 
 img {
   width: 100%;
@@ -19,6 +16,11 @@ img {
 
 .landing-inner {
   padding-top: 80px;
+}
+
+.landing-logo {
+  width: 100%;
+  height: auto;
 }
 
 .dark-overlay {

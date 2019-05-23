@@ -3,10 +3,6 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const ProgressUpdateSchema = new Schema({
-	trainer: {
-		type: Schema.Types.ObjectId,
-		ref: "users"
-	},
 	client: {
 		type: Schema.Types.ObjectId,
 		ref: "clients"

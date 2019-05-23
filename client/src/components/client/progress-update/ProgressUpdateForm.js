@@ -5,6 +5,8 @@ import TextFieldGroup from "../../common/TextFieldGroup";
 import InputGroup from "../../common/InputGroup";
 //import {addPost} from "../../actions/postActions";
 import PropTypes from "prop-types";
+
+import {uploadImage, addProgressUpdate} from "../../../actions/clientActions";
 import axios from 'axios';
 
 import { FilePond, registerPlugin  } from 'react-filepond';
@@ -36,7 +38,7 @@ class ProgressUpdateForm extends Component {
 			errors: {},
 			files: [],
 			success : false,
-      		url : ""
+      		imageUrl : ""
 		}
 	}
 
@@ -54,16 +56,7 @@ class ProgressUpdateForm extends Component {
 
 	onSubmit = e => {
 		e.preventDefault();
-		const {user} = this.props.auth;
 
-		const newPost = {
-			text: this.state.text,
-			name: user.name,
-			avatar: user.avatar
-		};
-
-		this.props.addPost(newPost);
-		this.setState({text: ""});
 	}
 
 
@@ -75,6 +68,15 @@ class ProgressUpdateForm extends Component {
 		this.setState({success: false, url : ""});
 		
 	  }
+
+	  onError = (error) => {
+		debugger;
+	  }
+
+	  onSuccess = (uploadedImage) => {
+		this.setState({imageUrl: uploadImage});
+		debugger;
+	  }
 	
 
 	// Perform the upload
@@ -82,49 +84,30 @@ class ProgressUpdateForm extends Component {
 
 		ev.preventDefault();
 
-		let file = this.state.files[0];
-		// Split the filename to get the name and type
-		let fileParts = this.state.files[0].name.split('.');
-		let fileName = fileParts[0];
-		let fileType = fileParts[1];
+		let files = this.state.files;
 		console.log("Preparing the upload");
-		axios.post(`http://localhost:5000/sign_s3`,{
-		  fileName : fileName,
-			fileType : fileType,
-		})
 
 
-		.then(response => {
-		  var returnData = response.data.data.returnData;
-			var signedRequest = returnData.signedRequest;
-			
+		if(files){
+			uploadImage(files)
+			.then((uploadedImage) => {this.onSuccess(uploadedImage)},
+			(error) => {this.onError(error)});
+		}
 
+		const {user} = this.props.auth;
 
-		  var url = returnData.url;
-		  this.setState({url: url})
-			console.log("Recieved a signed request " + signedRequest);
-			
+		const newProgress = {
+			notes: this.state.notes,
+			carbs: this.state.carbs,
+			fat: this.state.fat,
+			protein: this.state.protein,
+			weight: this.state.weight,
+			trainerId: user.current_trainer,
+			avatar: user.avatar
+		};
 
-		  
-		 // Put the fileType in the headers for the upload
-		  var options = {
-			headers: {
-				'Content-Type': fileType,
-			}
-			
-		  };
-		  axios.put(signedRequest,file,options)
-		  .then(result => {
-			console.log("Response from s3")
-			this.setState({success: true});
-		  })
-		  .catch(error => {
-			alert("ERROR " + JSON.stringify(error));
-		  })
-		})
-		.catch(error => {
-		  alert(JSON.stringify(error));
-		})
+		this.props.addProgressUpdate(newProgress, this.props.history);
+		this.setState({text: ""});
 
 
 	  }
@@ -236,7 +219,7 @@ class ProgressUpdateForm extends Component {
 }
 
 ProgressUpdateForm.propTypes = {
-	addPost: PropTypes.func.isRequired,
+	addProgressUpdate: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	errors:PropTypes.object.isRequired
 }
@@ -246,4 +229,4 @@ const mapStateToProps = state => ({
 	errors: state.errors
 });
 
-export default connect(mapStateToProps, {})(ProgressUpdateForm);
+export default connect(mapStateToProps, {addProgressUpdate})(ProgressUpdateForm);

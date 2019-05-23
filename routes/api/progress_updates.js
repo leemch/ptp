@@ -71,7 +71,7 @@ function callback(err, res) {
 //@desc    Create a progress update
 //@access  Private
 router.post("/:trainer_id", passport.authenticate("jwt", {session: false}), (req,res) => {
-	const {errors, isValid} = validatePostInput(req.body);
+	//const {errors, isValid} = validatePostInput(req.body);
 	//console.log(req.body);
 	//Check validation
 	//if(!isValid){
@@ -79,28 +79,20 @@ router.post("/:trainer_id", passport.authenticate("jwt", {session: false}), (req
 	//	return res.status(400).json(errors);
 	//}
 
-
-	Trainer.findById(req.params.trainer_id)
-	.then(trainer => {
-		if(trainer){
-
-
-			const clientIndex = trainer.client_list.findIndex(trainerClient => trainerClient.client == req.user.id)
-			console.log(clientIndex);
-			if(clientIndex > -1){
-				const newProgressUpdate = {
+				const newProgressUpdate = new ProgressUpdate({
+					client: req.user.id,
 					weight: req.body.weight,
-					macros: req.body.macros,
-				}
+					macros: {
+						fat: req.body.fat,
+						protein: req.body.protein,
+						carbs: req.body.carbs
+					},
+					notes: req.body.notes
+				});
 			
-				trainer.client_list[clientIndex].progress_updates.unshift(newProgressUpdate);
-				trainer.save().then(result = res.json(result));
-			}
-		}
-	})
-
-
-	
+				newProgressUpdate.save()
+				.then(progress => res.json(progress));
+			
 });
 
 

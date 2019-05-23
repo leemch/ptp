@@ -26,7 +26,7 @@ import Profile from './components/profile/Profile';
 import NotFound from './components/not-found/NotFound';
 import Posts from './components/posts/Posts';
 import Post from './components/post/Post';
-import ClientList from './components/client-list/ClientList';
+import ClientList from './components/dashboard/client-list/ClientList';
 
 import './App.css';
 import { setClientMacros } from './actions/trainerActions';
@@ -68,10 +68,13 @@ class App extends Component {
     return (
       <Provider store={store}>
       <Router>
+      
       <div className="App">
 
+      
         <Navbar />
         
+
         <Route exact path="/" component={Landing} />
         <div className="container">
           <Route exact path="/register" component={Register} />

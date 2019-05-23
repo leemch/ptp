@@ -85,6 +85,32 @@ export const addExperience = (expData, history) => dispatch => {
 	}));
 };
 
+
+// upload image
+export const uploadImage = (images) => {
+
+	const formData = new FormData();
+	images.map(img => formData.append('image', img));
+	//formData.append('image', images);
+
+	return axios.post('/api/image-upload/upload-multiple', formData)
+	.then(json => {
+		return json.data.imageUrl;
+	}).catch(({response}) => Promise.reject(response.data.errors));
+};
+
+// Add Progress Update
+export const addProgressUpdate = (progressData, history) => dispatch => {
+	axios.post(`/api/progress_updates/${progressData.trainerId}`, progressData)
+	.then(res => history.push("/dashboard"))
+	//.catch(err => dispatch({
+	//	type: GET_ERRORS,
+	//	payload: err.response.data
+	//}));
+};
+
+
+
 // Add Education
 export const addEducation = (eduData, history) => dispatch => {
 	axios.post("/api/profile/education", eduData)
