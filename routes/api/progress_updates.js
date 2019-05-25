@@ -35,42 +35,47 @@ router.get("/", (req, res) => {
 
 //@route   GET api/progress_updates/:id
 //@desc    Get progress update by id
-//@access  Public
-router.get("/:id", (req, res) => {
-	Post.findById(req.params.id)
-	.then(post => res.json(post))
-	.catch(err => res.status(404).json({nopostfound: "No post found with that ID."}));
-});
+//@access  Private
+router.get("/:client_id",passport.authenticate("jwt", {session: false}), (req, res) => {
 
-//@route   POST api/progress_updates/test
-//@desc    Tests progressUpdate route
-//@access  Public
-router.post("/test", (req, res) => {
-	// Set upload values
-const filePath = 'PATH TO LOCAL FILE TO BE UPLOADED';
-const fileName = 'FILE NAME TO UPLOAD AS';
-const folderId = 'FOLDER ID TO UPLOAD TO';
+if(req.user.isTrainer){
+	Trainer.findById(req.user.id)
+	.then(trainer => {
 
-// Create file upload stream
-const stream = fs.createReadStream(filePath);
+		if(trainer.client_list.filter(trainersClient => trainersClient.client === req.params.client_id)){
+			ProgressUpdate.find({client: req.params.client_id})
+			.sort({date: -1})
+			.then(progress => res.json(progress))
+			.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}));
+		}
+		else{
+			return res.status(404).json({notclient: "This is not your client."});
+		}
 
-// Upload file
-client.files.uploadFile(
-  folderId, 
-  fileName, 
-  stream, 
-  callback);
 
-function callback(err, res) {
-  // HANDLE ERROR CASE AND RESPONSE
+		
+	})
+	.catch(err => res.status(404).json({notrainer: "Trainer not found"}));
+} else {
+	if(req.user.id === req.params.client_id){
+		ProgressUpdate.find({client: req.params.client_id})
+			.sort({date: -1})
+			.then(progress => res.json(progress))
+			.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}));
+	}
+	else{
+		return res.status(404).json({notclient: "These are not your updates"});
+	}
 }
-});
+	
 
+
+});
 
 //@route   POST api/progress_updates
 //@desc    Create a progress update
 //@access  Private
-router.post("/:trainer_id", passport.authenticate("jwt", {session: false}), (req,res) => {
+router.post("/", passport.authenticate("jwt", {session: false}), (req,res) => {
 	//const {errors, isValid} = validatePostInput(req.body);
 	//console.log(req.body);
 	//Check validation

@@ -14,16 +14,7 @@ const imageUpload = require("./routes/api/image-upload");
 
 const app = express();
 
-const boxSDK = require('box-node-sdk');  // Box SDK
-const fs = require('fs');                // File system for config
 
-
-
-// Fetch config file for instantiating SDK instance
-const configJSON = JSON.parse(fs.readFileSync('./config/box_config.json'));
-
-// Instantiate instance of SDK using generated JSON config
-const sdk = boxSDK.getPreconfiguredInstance(configJSON);
 
 
 //Body parser middleware

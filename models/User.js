@@ -37,43 +37,7 @@ const UserSchema = new Schema({
 			client: {
 				type: Schema.Types.ObjectId,
 				ref: "clients",
-			},
-			macros: {
-				fat: {
-					type: String,
-					default: "0"
-				},
-				protein: {
-					type: String,
-					default: "0"
-				},
-				carbs: {
-					type: String,
-					default: "0"
-				}
-			},
-			progress_updates: [
-				{
-					date:{
-						type: Date,
-						default: Date.now,
-					},
-					weight:{
-						type: String,
-					},
-					macros:{
-						fat: {
-							type: String
-						},
-						protein: {
-							type: String
-						},
-						carbs: {
-							type: String
-						}
-					}
-				}
-			]
+			}
 		}
 	]
 

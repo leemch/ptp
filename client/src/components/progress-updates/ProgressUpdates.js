@@ -12,7 +12,9 @@ class ProgressUpdates extends Component {
 
 
 	componentDidMount(){
-		this.props.getProgressUpdates();
+		if(this.props.match.params.client_id){
+			this.props.getProgressUpdates(this.props.match.params.client_id);
+		}
 	}
 
 	render(){
