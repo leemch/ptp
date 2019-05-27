@@ -32,7 +32,17 @@ const upload = multer({
       cb(null, {fieldName: file.fieldname});
     },
     key: function (req, file, cb) {
-      cb(null, Date.now().toString())
+
+      let today = new Date();
+      const dd = String(today.getDate()).padStart(2, '0');
+      const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      const yyyy = today.getFullYear();
+
+      today = mm + '-' + dd + '-' + yyyy;
+
+      const newFileName = Date.now();
+      const fullPath = 'client-photos/'+ req.user.id + '/' + today.toString() + '/' + newFileName;
+      cb(null, fullPath);
     }
   })
 });

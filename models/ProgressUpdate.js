@@ -26,9 +26,7 @@ const ProgressUpdateSchema = new Schema({
 	},
 	photos:[
 	{
-		photo: {
-			type: String
-		}
+		type: String
 	}
 	],
 	date: {

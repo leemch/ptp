@@ -95,7 +95,7 @@ export const uploadImage = (images) => {
 
 	return axios.post('/api/image-upload/upload-multiple', formData)
 	.then(json => {
-		return json.data.imageUrl;
+		return json.data.imageUpload;
 	}).catch(({response}) => Promise.reject(response.data.errors));
 };
 
