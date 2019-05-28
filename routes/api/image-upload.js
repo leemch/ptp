@@ -79,8 +79,9 @@ router.post('/get_signed_cookie',passport.authenticate("jwt", {session: false}),
     httpOnly: true,
   });
 
-  // Send some response
-  res.send({ some: 'Succesfully created sign cloud front cookies' });
+  console.log("cookies: ");
+  console.log(cookie);
+  res.send(cookie);
 });
 
 
