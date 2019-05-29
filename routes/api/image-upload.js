@@ -52,7 +52,7 @@ const policy = JSON.stringify({
     ],
   });
 
-router.post('/get_signed_cookie',passport.authenticate("jwt", {session: false}), (req, res) => {
+router.get('/get_signed_cookie', (req, res) => {
     
     /* Code to Verify the credentials */
 

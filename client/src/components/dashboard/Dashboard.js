@@ -10,6 +10,8 @@ import Education from "./Education";
 import ClientDashboard from "./ClientDashboard";
 import ClientList from "./client-list/ClientList";
 
+import axios from "axios";
+
 //import {Header, Icon} from "semantic-ui-react";
 
 
@@ -17,6 +19,13 @@ class Dashboard extends Component {
 
 
 	componentDidMount() {
+
+		axios.get("/api/image-upload/get_signed_cookie", {withCredentials:true})
+		.then(res => {
+			console.log(res.cookie);
+		});
+
+
 		if(this.props.auth.user.isTrainer){
 			this.props.getCurrentProfile();
 		}
@@ -52,6 +61,7 @@ class Dashboard extends Component {
 						<div style={{marginBottom: "60px"}} />
 						<button onClick={this.onDeleteClick.bind(this)} className="btn btn-danger"> Delete my Account</button> */}
 						{/* <Link to="/client_list" className="btn btn-success">My Clients</Link>  */}
+						<img src="https://d12w44ud3mpa5f.cloudfront.net/bulb.jpg" alt="logo" className="img-fluid landing-logo"/> 
 						<ClientList />
 
 						</div>
