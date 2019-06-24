@@ -21,6 +21,8 @@ class Dashboard extends Component {
 	componentDidMount() {
 
 		axios.get("/api/image-upload/get_signed_cookie", {withCredentials:true})
+		//axios.get("http://127.0.0.1:5000/api/image-upload/get_signed_cookie", {withCredentials:true, 'Access-Control-Allow-Origin': '*'})
+		
 		.then(res => {
 			console.log(res.cookie);
 		});
