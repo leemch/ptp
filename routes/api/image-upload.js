@@ -63,21 +63,21 @@ router.get('/get_signed_cookie', (req, res) => {
 
   res.cookie('CloudFront-Key-Pair-Id', cookie['CloudFront-Key-Pair-Id'], {
     //domain: 'http://d12w44ud3mpa5f.cloudfront.net',
-    domain: 'localhost',
+    domain: 'http://d12w44ud3mpa5f.cloudfront.net',
     path: '/',
     httpOnly: true,
   });
 
   res.cookie('CloudFront-Policy', cookie['CloudFront-Policy'], {
     //domain: 'http://d12w44ud3mpa5f.cloudfront.net',
-    domain: 'localhost',
+    domain: 'http://d12w44ud3mpa5f.cloudfront.net',
     path: '/',
     httpOnly: true,
   });
 
   res.cookie('CloudFront-Signature', cookie['CloudFront-Signature'], {
     //domain: 'http://d12w44ud3mpa5f.cloudfront.net',
-    domain: 'localhost',
+    domain: 'http://d12w44ud3mpa5f.cloudfront.net',
     path: '/',
     httpOnly: true,
   });
