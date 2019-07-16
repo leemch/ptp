@@ -2,6 +2,7 @@ const aws = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const config = require("../config/keys");
+const path = require('path')
 
 
 
@@ -28,9 +29,12 @@ const upload = multer({
     fileFilter,
     s3,
     bucket: 'physique-trainer-pro',
-    metadata: function (req, file, cb) {
-      cb(null, {fieldName: file.fieldname});
-    },
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+    //metadata: function (req, file, cb) {
+    //  cb(null, {
+    //    fieldName: file.fieldname
+    //  });
+    //},
     key: function (req, file, cb) {
 
       let today = new Date();
@@ -42,10 +46,11 @@ const upload = multer({
 
       if(!req.headers.index)
         req.headers.index=0
-      const newFileName = req.headers.index++;
+      const newFileName = req.headers.index++ + "" + path.extname(file.originalname);
       const fullPath = 'client-photos/'+ req.user.id + '/' + today.toString() + '/' + newFileName;
       cb(null, fullPath);
     }
+    
   })
 });
 

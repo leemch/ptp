@@ -90,7 +90,8 @@ export const addExperience = (expData, history) => dispatch => {
 export const uploadImage = (images) => {
 
 	const formData = new FormData();
-	images.map(img => formData.append('image', img));
+	images.map(img =>  formData.append('image', img) );
+	//formData.append('Content-Type', 'image/jpeg');
 	//formData.append('image', images);
 
 	return axios.post('/api/image-upload/upload-multiple', formData)
