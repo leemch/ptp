@@ -46,7 +46,7 @@ const upload = multer({
 
       if(!req.headers.index)
         req.headers.index=0
-      const newFileName = req.headers.index++ + "" + path.extname(file.originalname);
+      const newFileName = req.headers.index++ + "" + path.extname(file.originalname).toLowerCase();
       const fullPath = 'client-photos/'+ req.user.id + '/' + today.toString() + '/' + newFileName;
       cb(null, fullPath);
     }

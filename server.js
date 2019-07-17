@@ -67,26 +67,6 @@ if(process.env.NODE_ENV === "production") {
 }
 
 
-const config = require("./config/keys");
-const cfsign = require('aws-cloudfront-sign');
-const AWS = require('aws-sdk');
-
-//////test
-
-const cloudFront = new AWS.CloudFront.Signer(config.CF_ACCESS_KEY, config.RSA_PRIVATE_KEY);
-  
-  // Generating a signed URL
-
-//   cloudFront.getSignedUrl({
-// 	url: 'http://d12w44ud3mpa5f.cloudfront.net/1558417408373',
-// 	expires: Math.floor((new Date()).getTime() / 1000) + (60 * 60 * 1) // Current Time in UTC + time in seconds, (60 * 60 * 1 = 1 hour)
-//   }, (err, url) => {
-// 	if (err) throw err;
-// 	console.log(url);
-//   });
-
-
-
 
 
 

@@ -20,12 +20,17 @@ const singleUpload = upload.single('image');
 const multipleUpload = upload.array('image',3);
 
 
+const config = require("../../config/keys");
+const AWS = require('aws-sdk');
+const cloudFront = new AWS.CloudFront.Signer(config.CF_ACCESS_KEY, config.RSA_PRIVATE_KEY);
+
 
 //@route   GET api/progress_updates/test
 //@desc    Tests progressUpdate route
 //@access  Public
 router.get("/test", (req, res) => res.json("progressUpdates works"));
 
+router.get("/urltest", (req, res) => res.json(getPhotoUrls('5c980b03602eba1d149749df', '07-16-2019', 3)));
 
 //@route   GET api/progress_updates/:id
 //@desc    Get progress update by id
@@ -127,13 +132,60 @@ router.post("/test", passport.authenticate("jwt", {session: false}), (req,res) =
 		newProgressUpdate.save()
 		.then(progress => res.json(progress));
     });
-	
-
-
 			
 });
 
 
+const getPhotoUrls = (client_id, date, numPhotos) => {
+
+	let urls = [];
+
+	for(let x = 0; x < numPhotos; x++){
+		// Generating a signed URL
+		cloudFront.getSignedUrl({
+			url: 'http://d12w44ud3mpa5f.cloudfront.net/' + 'client-photos' + '/' + client_id + '/' + date + '/' + x + ".jpg",
+			expires: Math.floor((new Date()).getTime() / 1000) + (60*60*1) // Current Time in UTC + time in seconds, (60 * 60 * 1 = 1 hour)
+		}, (err, url) => {
+			if (err) throw err;
+			urls.push(url);
+		});
+	}
+	return urls;
+}
+
+//Get signed urls to photos
+router.post('/photos/:client_id/:date',passport.authenticate("jwt", {session: false}), (req, res) => {
+
+	if(req.user.isTrainer){
+		Trainer.findById(req.user.id)
+		.then(trainer => {
+	
+			if(trainer.client_list.filter(trainersClient => trainersClient.client === req.params.client_id)){
+
+				ProgressUpdate.find({client: req.params.client_id})
+				.sort({date: -1})
+				.then(progress => res.json(progress))
+				.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}));
+			}
+			else{
+				return res.status(404).json({notclient: "This is not your client."});
+			}
+		})
+		.catch(err => res.status(404).json({notrainer: "Trainer not found"}));
+	} else {
+		if(req.user.id === req.params.client_id){
+			ProgressUpdate.find({client: req.params.client_id})
+				.sort({date: -1})
+				.then(progress => res.json(progress))
+				.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}));
+		}
+		else{
+			return res.status(404).json({notclient: "These are not your updates"});
+		}
+	}
+  });
+
+  
 
 
 
