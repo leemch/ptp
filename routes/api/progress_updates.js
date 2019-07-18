@@ -79,44 +79,11 @@ router.post("/", passport.authenticate("jwt", {session: false}), (req,res) => {
 		//If any errors, send 400 with errors object
 	//	return res.status(400).json(errors);
 	//}
-	
-		const newProgressUpdate = new ProgressUpdate({
-			client: req.user.id,
-			weight: req.body.weight,
-			macros: {
-				fat: req.body.fat,
-				protein: req.body.protein,
-				carbs: req.body.carbs
-			},
-			notes: req.body.notes,
-
-		});
-	
-		newProgressUpdate.save()
-		.then(progress => res.json(progress));
-
-			
-});
-
-
-//@route   POST api/progress_updates
-//@desc    Create a progress update
-//@access  Private
-router.post("/test", passport.authenticate("jwt", {session: false}), (req,res) => {
-	//const {errors, isValid} = validatePostInput(req.body);
-	//console.log(req.body);
-	//Check validation
-	//if(!isValid){
-		//If any errors, send 400 with errors object
-	//	return res.status(400).json(errors);
-	//}
-
 
 	multipleUpload(req, res, err => {
         if(err){
             return res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}]});
-		}
-		
+        }
 		const newProgressUpdate = new ProgressUpdate({
 			client: req.user.id,
 			weight: req.body.weight,
@@ -126,12 +93,17 @@ router.post("/test", passport.authenticate("jwt", {session: false}), (req,res) =
 				carbs: req.body.carbs
 			},
 			notes: req.body.notes,
+			photos: req.body.photos
 
 		});
 	
 		newProgressUpdate.save()
 		.then(progress => res.json(progress));
     });
+
+	
+
+
 			
 });
 

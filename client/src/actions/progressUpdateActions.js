@@ -3,14 +3,11 @@ import axios from "axios";
 import { ADD_PROGRESS_UPDATE, GET_ERRORS, GET_PROGRESS_UPDATES, PROGRESS_UPDATE_LOADING, DELETE_PROGRESS_UPDATE, GET_PROGRESS_UPDATE, CLEAR_ERRORS } from "./types";
 
 //Add progress update
-export const addProgressUpdate = (progressData) => dispatch => {
+export const addProgressUpdate = (progressData, history) => dispatch => {
 	dispatch(clearErrors());
 	axios.post(`/api/progress_updates/`, progressData)
 	.then(res => {
-		dispatch({
-			type: ADD_PROGRESS_UPDATE,
-			payload: res.data
-		})
+		history.push("/dashboard");
 	})
 	.catch(err => dispatch({
 			type: GET_ERRORS,
@@ -18,6 +15,14 @@ export const addProgressUpdate = (progressData) => dispatch => {
 		})
 	);
 };
+
+// Create profile
+export const createProfile = (profileData, history) => (dispatch) => {
+	dispatch(clearErrors());
+	axios.post("/api/profile", profileData)
+	.then(result => history.push("/dashboard"))
+	.catch(err => dispatch({type: GET_ERRORS, payload: err.response.data}));
+}
 
 
 //Add photo

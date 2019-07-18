@@ -24,11 +24,9 @@ const ProgressUpdateSchema = new Schema({
 	weight: {
 		type: String
 	},
-	photos:[
-	{
-		type: String
-	}
-	],
+	photos:{
+		type: Number
+	},
 	date: {
 		type: Date,
 		default: Date.now
