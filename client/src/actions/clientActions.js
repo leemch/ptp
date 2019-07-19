@@ -100,14 +100,22 @@ export const uploadImage = (images) => {
 	}).catch(({response}) => Promise.reject(response.data.errors));
 };
 
-// Add Progress Update
+//Add progress update
 export const addProgressUpdate = (progressData, history) => dispatch => {
-	axios.post(`/api/progress_updates/${progressData.trainerId}`, progressData)
-	.then(res => history.push("/dashboard"))
-	//.catch(err => dispatch({
-	//	type: GET_ERRORS,
-	//	payload: err.response.data
-	//}));
+	//dispatch(clearErrors());
+
+	const formData = new FormData();
+	progressData.images.map(img =>  formData.append('image', img) );
+
+	axios.post(`/api/progress_updates/`, progressData, formData)
+	.then(res => {
+		history.push("/dashboard");
+	})
+	.catch(err => dispatch({
+			type: GET_ERRORS,
+			payload: err.response.data
+		})
+	);
 };
 
 

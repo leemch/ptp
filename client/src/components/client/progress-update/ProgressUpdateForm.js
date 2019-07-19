@@ -104,7 +104,8 @@ class ProgressUpdateForm extends Component {
 			weight: this.state.weight,
 			trainerId: user.current_trainer,
 			avatar: user.avatar,
-			photos: this.state.files.length
+			photos: this.state.files.length,
+			images: this.state.files
 		};
 
 		this.props.addProgressUpdate(newProgress, this.props.history);

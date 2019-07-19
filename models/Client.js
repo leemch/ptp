@@ -30,7 +30,20 @@ const ClientSchema = new Schema({
 	},
 	current_trainer: {
 		type: Schema.Types.ObjectId,
-		
+	},
+	macros: {
+		fat: {
+			type: Number,
+			default: 0
+		},
+		protein: {
+			type: Number,
+			default: 0
+		},
+		carbs: {
+			type: Number,
+			default: 0
+		}
 	}
 
 });
