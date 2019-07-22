@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {getCurrentMacros, deleteAccount} from "../../actions/clientActions";
+import {getCurrentMacros, deleteAccount, getPhotos} from "../../actions/clientActions";
 import ProfileHeader from '../profile/ProfileHeader'
 import Spinner from "../common/Spinner";
 import ProfileActions from "./ProfileActions";
@@ -13,9 +13,13 @@ import isEmpty from "../../validation/isEmpty"
 
 class Dashboard extends Component {
 
+  state = {
+    photos: {}
+  }
+
 	componentDidMount(){
 
-			this.props.getCurrentMacros();
+      this.props.getCurrentMacros();
 		
 	}
 
@@ -99,6 +103,7 @@ class Dashboard extends Component {
 
 		return(
 				<div className="container">
+
 							{dashboardContent}
 				</div>
 		)

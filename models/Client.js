@@ -44,6 +44,29 @@ const ClientSchema = new Schema({
 			type: Number,
 			default: 0
 		}
+	},
+	training: {
+		monday: {
+			type: String
+		},
+		tuesday: {
+			type: String
+		},
+		wednesday: {
+			type: String
+		},
+		thursday: {
+			type: String
+		},
+		friday: {
+			type: String
+		},
+		saturday: {
+			type: String
+		},
+		sunday: {
+			type: String
+		}
 	}
 
 });

@@ -335,30 +335,34 @@ router.post("/macros/:client_id", passport.authenticate("jwt", {session: false})
 
 
 	if(isTrainer){
-
 		User.findById(trainer_id)
 		.then(trainer => {
 			const clientIndex = trainer.client_list.findIndex(trainersClient => trainersClient.client == client_id);
-			console.log(clientIndex);
-			const newMacros = {
-				fat: req.body.fat,
-				protein: req.body.protein,
-				carbs: req.body.carbs
+			if(clientIndex !== -1){
+				const newMacros = {
+					fat: req.body.fat,
+					protein: req.body.protein,
+					carbs: req.body.carbs
+				}
+				Client.findById(client_id)
+				.then(client => {
+					if(!client){
+						console.log("poo");
+						return res.status(400).json({noclient: "this client does not exist"});
+					}
+					client.macros = newMacros;
+					client.save().then(client => res.json(client.macros));	
+				});
 			}
-			
-			trainer.client_list[clientIndex].macros = newMacros;
-			trainer.save().then(macros => res.json(newMacros));
+			else {
+				return res.status(400).json({noclient: "Client could not be found"});
+			}
+
 		})
-		.catch(err => console.error(err))
 
 	} else {
-		return res.status(400).json("You are not a trainer");
+		return res.status(400).json({error: "You are not a trainer"});
 	}
-
-
-
-
-
 });
 
 //@route   GET api/users/current

@@ -17,11 +17,20 @@ import axios from "axios";
 
 class Dashboard extends Component {
 
+	state = {
+		photos: {}
+	}
+
 
 	componentDidMount() {
 
 		if(this.props.auth.user.isTrainer){
 			this.props.getCurrentProfile();
+			const id = '5c980b03602eba1d149749df';
+			const date = '07-18-2019';
+			const num = 1;
+			axios.get(`/api/progress_updates/photos/${id}/${date}/${num}`)
+			.then(result => {this.setState({photos: result.data})});
 		}
 		else {
 			this.props.getProfileById(this.props.auth.user.current_trainer);
@@ -56,6 +65,7 @@ class Dashboard extends Component {
 						<button onClick={this.onDeleteClick.bind(this)} className="btn btn-danger"> Delete my Account</button> */}
 						{/* <Link to="/client_list" className="btn btn-success">My Clients</Link>  */}
 						<ClientList />
+						<img src={this.state.photos[0]} alt="..." class="img-thumbnail"></img>
 
 						</div>
 					);

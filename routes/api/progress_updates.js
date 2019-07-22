@@ -116,7 +116,7 @@ const getPhotoUrls = (client_id, date, numPhotos) => {
 		// Generating a signed URL
 		cloudFront.getSignedUrl({
 			url: 'http://d12w44ud3mpa5f.cloudfront.net/' + 'client-photos' + '/' + client_id + '/' + date + '/' + x + ".jpg",
-			expires: Math.floor((new Date()).getTime() / 1000) + (60*60*1) // Current Time in UTC + time in seconds, (60 * 60 * 1 = 1 hour)
+			expires: Math.floor((new Date()).getTime() / 1000) + (5) // Current Time in UTC + time in seconds, (60 * 60 * 1 = 1 hour)
 		}, (err, url) => {
 			if (err) throw err;
 			urls.push(url);
@@ -126,36 +126,12 @@ const getPhotoUrls = (client_id, date, numPhotos) => {
 }
 
 //Get signed urls to photos
-router.post('/photos/:client_id/:date',passport.authenticate("jwt", {session: false}), (req, res) => {
+// Private
+router.get('/photos/:client_id/:date/:num_photos',passport.authenticate("jwt", {session: false}), (req, res) => {
 
-	if(req.user.isTrainer){
-		Trainer.findById(req.user.id)
-		.then(trainer => {
-	
-			if(trainer.client_list.filter(trainersClient => trainersClient.client === req.params.client_id)){
-
-				ProgressUpdate.find({client: req.params.client_id})
-				.sort({date: -1})
-				.then(progress => res.json(progress))
-				.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}));
-			}
-			else{
-				return res.status(404).json({notclient: "This is not your client."});
-			}
-		})
-		.catch(err => res.status(404).json({notrainer: "Trainer not found"}));
-	} else {
-		if(req.user.id === req.params.client_id){
-			ProgressUpdate.find({client: req.params.client_id})
-				.sort({date: -1})
-				.then(progress => res.json(progress))
-				.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}));
-		}
-		else{
-			return res.status(404).json({notclient: "These are not your updates"});
-		}
-	}
-  });
+	res.json(getPhotoUrls(req.params.client_id, req.params.date, req.params.num_photos));
+	//res.json(getPhotoUrls(req.params.client_id, req.params.date, req.params.numPhotos));
+});
 
   
 

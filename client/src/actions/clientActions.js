@@ -202,3 +202,9 @@ export const clearCurrentProfile = () => {
 	}
 }
 
+// Get Photos
+export const getPhotos = (id, date, num) => {
+	axios.get(`/api/progress_updates/photos/${id}/${date}/${num}`)
+	.then(result => {return result})
+}
+
