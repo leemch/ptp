@@ -129,7 +129,28 @@ const getPhotoUrls = (client_id, date, numPhotos) => {
 // Private
 router.get('/photos/:client_id/:date/:num_photos',passport.authenticate("jwt", {session: false}), (req, res) => {
 
-	res.json(getPhotoUrls(req.params.client_id, req.params.date, req.params.num_photos));
+	if(req.user.isTrainer){
+		Trainer.findById(req.user.id)
+		.then(trainer => {
+	
+			if(trainer.client_list.filter(trainersClient => trainersClient.client == req.params.client_id).length > 0){
+				res.json(getPhotoUrls(req.params.client_id, req.params.date, req.params.num_photos));
+			}
+			else{
+				return res.status(404).json({notclient: "This is not your client."});
+			}
+		})
+		.catch(err => res.status(404).json({notrainer: "Trainer not found"}));
+	} else {
+		if(req.user.id === req.params.client_id){
+			res.json(getPhotoUrls(req.params.client_id, req.params.date, req.params.num_photos));
+		}
+		else{
+			return res.status(404).json({notclient: "These are not your updates"});
+		}
+	}
+
+	
 	//res.json(getPhotoUrls(req.params.client_id, req.params.date, req.params.numPhotos));
 });
 

@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import classnames from "classnames";
 import {Link} from "react-router-dom";
 import {deleteProgressUpdate, addLike, removeLike} from "../../actions/progressUpdateActions";
+import ProgressUpdatePhotos from "./ProgressUpdatePhotos";
 
 
 class ProgressUpdateItem extends Component {
@@ -14,6 +15,7 @@ class ProgressUpdateItem extends Component {
 		const {progressUpdate, auth, showActions} = this.props;
 		return(
 			<div className="card card-body mb-3">
+			<ProgressUpdatePhotos />
               <div className="row">
 							<p className="lead">{progressUpdate.date}</p>
                 <div className="col-md-2">
