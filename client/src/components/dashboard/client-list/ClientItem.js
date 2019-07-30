@@ -58,7 +58,7 @@ class ClientItem extends Component {
 							Manage Client
 						</Link> */}
 						<button type="button" className="btn btn-primary mr-3" data-toggle="modal" data-target={`#exampleModalCenter${client.client._id}`}>Set macros</button>
-						<Link to={`/progress_feed/${client.client._id}`} type="button" className="btn btn-primary">View Progress Update Feed</Link>
+						<Link to={`/progress_feed/${client.client._id}`} type="button" className="btn btn-primary">View Progress Updates</Link>
 
 {/* ////////////////////////////////////////// */}
 						{/* <!-- Modal --> */}

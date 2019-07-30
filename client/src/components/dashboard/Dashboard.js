@@ -9,7 +9,6 @@ import Experience from "./Experience";
 import Education from "./Education";
 import ClientDashboard from "./ClientDashboard";
 import ClientList from "./client-list/ClientList";
-
 import axios from "axios";
 
 //import {Header, Icon} from "semantic-ui-react";
@@ -65,7 +64,6 @@ class Dashboard extends Component {
 						<button onClick={this.onDeleteClick.bind(this)} className="btn btn-danger"> Delete my Account</button> */}
 						{/* <Link to="/client_list" className="btn btn-success">My Clients</Link>  */}
 						<ClientList />
-						<img src={this.state.photos[0]} alt="..." class="img-thumbnail"></img>
 
 						</div>
 					);

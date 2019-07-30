@@ -30,7 +30,7 @@ import ClientList from './components/dashboard/client-list/ClientList';
 
 import './App.css';
 import { setClientMacros } from './actions/trainerActions';
-import ProgressUpdates from './components/progress-updates/ProgressUpdates';
+import Calendar from './components/progress-updates/Calendar';
 import ProgressUpdateForm from './components/client/progress-update/ProgressUpdateForm';
 
 // Check for token
@@ -111,7 +111,7 @@ class App extends Component {
           </Switch>
 
           <Switch>
-            <PrivateRoute exact path="/progress_feed/:client_id" component={ProgressUpdates} />
+            <PrivateRoute exact path="/progress_feed/:client_id" component={Calendar} />
           </Switch>
 
           <Switch>

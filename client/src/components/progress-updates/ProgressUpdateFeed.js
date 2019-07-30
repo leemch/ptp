@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from "prop-types";
 import ProgressUpdateItem from "./ProgressUpdateItem";
+import Calendar from "./Calendar";
 
 
 class ProgressUpdateFeed extends Component {
