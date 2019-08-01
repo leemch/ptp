@@ -94,7 +94,7 @@ export const getProgressUpdates = (clientId) => dispatch => {
 		dispatch({
 			type: GET_PROGRESS_UPDATES,
 			payload: res.data
-		})
+		});
 	})
 	.catch(err => dispatch({
 			type: GET_PROGRESS_UPDATES,

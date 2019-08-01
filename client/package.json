@@ -8,7 +8,6 @@
     "@fullcalendar/daygrid": "^4.2.0",
     "@fullcalendar/interaction": "^4.2.0",
     "@fullcalendar/react": "^4.2.0",
-    "@fullcalendar/timegrid": "^4.2.0",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "filepond": "^4.3.4",
