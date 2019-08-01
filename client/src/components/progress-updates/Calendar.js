@@ -5,6 +5,10 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
 import BootstrapTheme from '@fullcalendar/bootstrap';
 
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {getProgressUpdates} from "../../actions/progressUpdateActions";
+
 
 // must manually import the stylesheets for each plugin
 import "@fullcalendar/core/main.css";
@@ -20,8 +24,31 @@ class CalendarApp extends React.Component {
     calendarEvents: [
       // initial event data
       { title: "Event Now", start: new Date() }
-    ]
+    ],
+    loading: true
+
   };
+
+
+  componentDidMount() {
+    this.props.getProgressUpdates(this.props.match.params.client_id);
+    console.log(this.props.progressUpdate.progressUpdates);
+
+      this.props.progressUpdate.progressUpdates.map(update => {
+        console.log(update.date);
+        this.setState({
+          calendarEvents: this.state.calendarEvents.concat({
+            // creates a new array
+            title: "Progress update posted",
+            start: update.date,
+            allDay: true
+          })
+        });
+      })
+      
+    
+  }
+
 
   render() {
     return (
@@ -53,17 +80,28 @@ class CalendarApp extends React.Component {
 
   handleDateClick = arg => {
 
+    this.props.progressUpdate.progressUpdates.map(update => {
+      console.log(update.date);
       this.setState({
-        // add new event data
         calendarEvents: this.state.calendarEvents.concat({
           // creates a new array
-          title: "New Event",
-          start: arg.date,
-          allDay: arg.allDay
+          title: "Progress update posted",
+          start: update.date,
+          allDay: true
         })
       });
+    })
     
   };
 }
 
-export default CalendarApp;
+CalendarApp.propTypes = {
+  getProgressUpdates: PropTypes.func.isRequired,
+  progressUpdate: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+	progressUpdate: state.progressUpdate
+});
+
+export default connect(mapStateToProps, {getProgressUpdates} )(CalendarApp);

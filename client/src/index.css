@@ -9,7 +9,7 @@ body {
   background: url("./background.png");
 }
 
-h1 {
+h1, h2, text, span {
   color: white;
 }
 
