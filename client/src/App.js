@@ -28,10 +28,11 @@ import Posts from './components/posts/Posts';
 import Post from './components/post/Post';
 import ClientList from './components/dashboard/client-list/ClientList';
 
+
 import './App.css';
-import { setClientMacros } from './actions/trainerActions';
 import Calendar from './components/progress-updates/Calendar';
 import ProgressUpdateForm from './components/client/progress-update/ProgressUpdateForm';
+import ProgressUpdatePost from './components/progress-updates/progressUpdatePost/Post';
 
 // Check for token
 if(localStorage.jwtToken) {
@@ -112,6 +113,10 @@ class App extends Component {
 
           <Switch>
             <PrivateRoute exact path="/progress_feed/:client_id" component={Calendar} />
+          </Switch>
+
+          <Switch>
+            <PrivateRoute exact path="/progress_details" component={ProgressUpdatePost} />
           </Switch>
 
           <Switch>

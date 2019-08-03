@@ -38,25 +38,25 @@ class CalendarApp extends React.Component {
     if (this.props.progressUpdate !== prevProps.progressUpdate) {
       let newUpdates = [];
 
+      if(this.props.progressUpdate.progressUpdates != null){
+        this.props.progressUpdate.progressUpdates.map(update => {
+          console.log(update.date);
 
-      
-      this.props.progressUpdate.progressUpdates.map(update => {
-        console.log(update.date);
+          let stringToDate = new Date(update.date);
+          const dd = String(stringToDate.getDate()).padStart(2, '0');
+          const mm = String(stringToDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+          const yyyy = stringToDate.getFullYear();
+          let progressDate = yyyy + '-' + mm + '-' + dd;
+          console.log(progressDate);
 
-        let stringToDate = new Date(update.date);
-        const dd = String(stringToDate.getDate()).padStart(2, '0');
-        const mm = String(stringToDate.getMonth() + 1).padStart(2, '0'); //January is 0!
-        const yyyy = stringToDate.getFullYear();
-        let progressDate = yyyy + '-' + mm + '-' + dd;
-        console.log(progressDate);
-
-        newUpdates.push({
-          // creates a new array
-          title: "Progress update posted",
-          start: progressDate,
-          allDay: true
-        })
-      });
+          newUpdates.push({
+            // creates a new array
+            title: "Progress update posted",
+            start: progressDate,
+            allDay: true
+          })
+        });
+      }
 
       this.setState({
         calendarEvents: newUpdates
@@ -106,7 +106,7 @@ class CalendarApp extends React.Component {
 
   handleDateClick = arg => {
 
-    
+    this.props.history.push("/progress_details");
     
   };
 }
