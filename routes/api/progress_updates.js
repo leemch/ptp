@@ -32,8 +32,8 @@ router.get("/test", (req, res) => res.json("progressUpdates works"));
 
 router.get("/urltest", (req, res) => res.json(getPhotoUrls('5c980b03602eba1d149749df', '07-16-2019', 3)));
 
-//@route   GET api/progress_updates/:id
-//@desc    Get progress update by id
+//@route   GET api/progress_updates/:client_id
+//@desc    Get all progress updates by client_id
 //@access  Private
 router.get("/:client_id",passport.authenticate("jwt", {session: false}), (req, res) => {
 
@@ -64,6 +64,39 @@ if(req.user.isTrainer){
 	}
 }
 });
+
+
+//@route   GET api/progress_updates/:id
+//@desc    Get progress update by id
+//@access  Private
+router.get("/:id",passport.authenticate("jwt", {session: false}), (req, res) => {
+	res.json({poo:"poo"});
+	if(req.user.isTrainer){
+		Trainer.findById(req.user.id)
+		.then(trainer => {
+	
+			if(trainer.client_list.filter(trainersClient => trainersClient.client === req.params.client_id)){
+				
+				ProgressUpdate.findById(req.params.id)
+				.then(progress => res.json(progress))
+				.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}));
+			}
+			else{
+				return res.status(404).json({notclient: "This is not your client."});
+			}
+		})
+		.catch(err => res.status(404).json({notrainer: "Trainer not found"}));
+	} else {
+		if(req.user.id === req.params.client_id){
+			ProgressUpdate.findById(req.params.id)
+				.then(progress => res.json(progress))
+				.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}));
+		}
+		else{
+			return res.status(404).json({notclient: "These are not your updates"});
+		}
+	}
+	});
 
 
 

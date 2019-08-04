@@ -53,7 +53,7 @@ class CalendarApp extends React.Component {
             // creates a new array
             title: "Progress update posted",
             start: progressDate,
-            allDay: true
+            allDay: true,
           })
         });
       }
@@ -67,7 +67,7 @@ class CalendarApp extends React.Component {
 
 
   render() {
-    const {loading} = this.props.progressUpdate;
+    const {loading, progressUpdates} = this.props.progressUpdate;
     let calendarContent;
     if(loading){
       calendarContent = <Spinner />
@@ -85,6 +85,7 @@ class CalendarApp extends React.Component {
                         weekends={this.state.calendarWeekends}
                         events={this.state.calendarEvents}
                         dateClick={this.handleDateClick}
+                        eventClick={this.handleEventClick}
                       />);
     }
 
@@ -102,11 +103,26 @@ class CalendarApp extends React.Component {
   }
 
 
+  handleEventClick = info => {
+    let dateClicked = new Date(info.event.start);
+    
 
+    const updateIndex = this.props.progressUpdate.progressUpdates.findIndex(update => {
+        let progressDate = new Date(update.date);
+        return (dateClicked.getDate() === progressDate.getDate() && dateClicked.getMonth() === progressDate.getMonth() && dateClicked.getFullYear() === progressDate.getFullYear())
+    });
+
+    if(updateIndex != -1){
+      console.log(this.props.progressUpdate.progressUpdates[updateIndex]._id);
+      this.props.history.push(`/progress_details/${this.props.progressUpdate.progressUpdates[updateIndex]._id}`);
+    }
+
+    
+  }
 
   handleDateClick = arg => {
 
-    this.props.history.push("/progress_details");
+    //this.props.history.push("/progress_details");
     
   };
 }

@@ -116,7 +116,7 @@ class App extends Component {
           </Switch>
 
           <Switch>
-            <PrivateRoute exact path="/progress_details" component={ProgressUpdatePost} />
+            <PrivateRoute exact path="/progress_details/:id" component={ProgressUpdatePost} />
           </Switch>
 
           <Switch>

@@ -104,17 +104,17 @@ export const getProgressUpdates = (clientId) => dispatch => {
 };
 
 //Get post
-export const getProgressUpdate = (client_id, id) => dispatch => {
+export const getProgressUpdate = (id) => dispatch => {
 	dispatch(setProgressUpdateLoading());
-	axios.get(`/api/posts/${client_id}/${id}`)
+	axios.get(`/api/progress_updates/${id}`)
 	.then(res => {
 		dispatch({
-			type: GET_PROGRESS_UPDATES,
+			type: GET_PROGRESS_UPDATE,
 			payload: res.data
 		})
 	})
 	.catch(err => dispatch({
-			type: GET_PROGRESS_UPDATES,
+			type: GET_PROGRESS_UPDATE,
 			payload: null
 		})
 	);
