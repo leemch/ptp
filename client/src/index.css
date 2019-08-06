@@ -7,9 +7,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: url("./background.png");
+  color: white
 }
 
-h1, h2, text, span {
+h1, h2, text, span, tr, td {
   color: white;
 }
 

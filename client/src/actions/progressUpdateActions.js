@@ -89,7 +89,7 @@ export const deleteProgressUpdate = id => dispatch => {
 //Get progress updates
 export const getProgressUpdates = (clientId) => dispatch => {
 	dispatch(setProgressUpdateLoading());
-	axios.get(`/api/progress_updates/${clientId}`)
+	axios.get(`/api/progress_updates/all/${clientId}`)
 	.then(res => {
 		dispatch({
 			type: GET_PROGRESS_UPDATES,

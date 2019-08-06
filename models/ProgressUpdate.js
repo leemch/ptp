@@ -30,7 +30,30 @@ const ProgressUpdateSchema = new Schema({
 	date: {
 		type: Date,
 		default: Date.now
-	}
+	},
+	comments: [
+		{
+			user: {
+				type: Schema.Types.ObjectId,
+				ref: "users"
+			},
+			text: {
+				type: String,
+				required: true
+			},
+			name: {
+				type: String,
+			},
+			avatar: {
+				type: String
+			},
+			date: {
+				type: Date,
+				default: Date.now
+			}
+		}
+	]
+	
 });
 
 module.exports = ProgressUpdate = mongoose.model("progress_updates", ProgressUpdateSchema);

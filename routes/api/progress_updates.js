@@ -35,7 +35,7 @@ router.get("/urltest", (req, res) => res.json(getPhotoUrls('5c980b03602eba1d1497
 //@route   GET api/progress_updates/:client_id
 //@desc    Get all progress updates by client_id
 //@access  Private
-router.get("/:client_id",passport.authenticate("jwt", {session: false}), (req, res) => {
+router.get("/all/:client_id",passport.authenticate("jwt", {session: false}), (req, res) => {
 
 if(req.user.isTrainer){
 	Trainer.findById(req.user.id)
@@ -70,7 +70,6 @@ if(req.user.isTrainer){
 //@desc    Get progress update by id
 //@access  Private
 router.get("/:id",passport.authenticate("jwt", {session: false}), (req, res) => {
-	res.json({poo:"poo"});
 	if(req.user.isTrainer){
 		Trainer.findById(req.user.id)
 		.then(trainer => {
