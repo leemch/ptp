@@ -6,6 +6,9 @@ import {Link} from "react-router-dom";
 import CommentForm from "./CommentForm";
 import CommentFeed from "./CommentFeed";
 
+import MacroChart from './MacroChart'
+import ProgressDetails from './ProgressDetails'
+
 import Spinner from "../../common/Spinner";
 import { getProgressUpdate } from "../../../actions/progressUpdateActions";
 
@@ -47,7 +50,7 @@ class Post extends Component {
 			postContent = <Spinner />
 		} else {
 			postContent = (
-				<div id="carouselExampleIndicators" className="carousel slide" >
+				<div id="carouselExampleIndicators" className="carousel slide" data-interval="false">
 					<ol className="carousel-indicators">
 						<li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
 						<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -96,36 +99,8 @@ class Post extends Component {
 						
 						{postContent}
 
-						<div class="table-responsive">
-						<table class="table table-striped table-lg table-bordered table-dark">
-						<thead>
-							<tr>
-							<th>Macro</th>
-							<th>Amount</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-							<td>Protein</td>
-							<td>{this.state.protein}</td>
-							</tr>
-						</tbody>
-						<tbody>
-							<tr>
-							<td>Fat</td>
-							<td>{this.state.fat}</td>
-							</tr>
-						</tbody>
-						<tbody>
-							<tr>
-							<td>Carbohydrates</td>
-							<td>{this.state.carbs}</td>
-							</tr>
-						</tbody>
-
-						</table>
-						</div>
-
+						
+						<ProgressDetails />
 						<CommentForm postId={progressUpdate._id} />
 						<CommentFeed postId={progressUpdate._id} comments={progressUpdate.comments} />
 
