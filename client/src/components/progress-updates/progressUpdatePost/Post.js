@@ -100,7 +100,7 @@ class Post extends Component {
 						{postContent}
 
 						
-						<ProgressDetails />
+						<ProgressDetails fat={this.state.fat} protein={this.state.protein} carbs={this.state.carbs}/>
 						<CommentForm postId={progressUpdate._id} />
 						<CommentFeed postId={progressUpdate._id} comments={progressUpdate.comments} />
 

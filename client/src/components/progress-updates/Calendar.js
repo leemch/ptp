@@ -54,6 +54,7 @@ class CalendarApp extends React.Component {
             title: "Progress update posted",
             start: progressDate,
             allDay: true,
+            imageurl:'img/edit.png'
           })
         });
       }

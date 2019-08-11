@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 
 class ProgressDetails extends Component {
 	render(){
-		const {experience, education} = this.props;
+		const {fat, protein, carbs} = this.props;
 
 
 
@@ -24,19 +24,25 @@ class ProgressDetails extends Component {
 						<tbody>
 							<tr>
 							<td>Protein</td>
-							<td>{}</td>
+							<td>{protein}g</td>
 							</tr>
 						</tbody>
 						<tbody>
 							<tr>
 							<td>Fat</td>
-							<td>{}</td>
+							<td>{fat}g</td>
 							</tr>
 						</tbody>
 						<tbody>
 							<tr>
 							<td>Carbohydrates</td>
-							<td>{}</td>
+							<td>{carbs}g</td>
+							</tr>
+						</tbody>
+						<tbody>
+							<tr>
+							<td>Total Calories</td>
+							<td>{(fat*9)+(protein*3)+(carbs*3)} Calories</td>
 							</tr>
 						</tbody>
 
@@ -48,6 +54,24 @@ class ProgressDetails extends Component {
 
 				<div className="col-md-6">
 					<h3 className="text-center text-info">Training</h3>
+
+					<div className="table-responsive">
+						<table className="table table-striped table-lg table-bordered table-dark padding-4">
+						<tbody>
+							<tr>
+							<td>Calories Burned:</td>
+							<td></td>
+							</tr>
+						</tbody>
+						<tbody>
+							<tr>
+							<td>Lifts:</td>
+							<td></td>
+							</tr>
+						</tbody>
+
+						</table>
+					</div>
 					
 				</div>
 			</div>
