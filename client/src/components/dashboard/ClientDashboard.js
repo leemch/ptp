@@ -19,7 +19,7 @@ class Dashboard extends Component {
 
 	componentDidMount(){
 
-      this.props.getCurrentMacros();
+      //this.props.getCurrentMacros();
 		
 	}
 

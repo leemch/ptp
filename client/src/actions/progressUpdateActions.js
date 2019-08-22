@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { ADD_PROGRESS_UPDATE, GET_ERRORS, GET_PROGRESS_UPDATES, PROGRESS_UPDATE_LOADING, DELETE_PROGRESS_UPDATE, GET_PROGRESS_UPDATE, CLEAR_ERRORS } from "./types";
+import { ADD_PROGRESS_UPDATE, GET_ERRORS, GET_PROGRESS_UPDATES, GET_PROGRESS_PHOTOS, PROGRESS_UPDATE_LOADING, DELETE_PROGRESS_UPDATE, GET_PROGRESS_UPDATE, CLEAR_ERRORS } from "./types";
 
 //Add progress update
 export const addProgressUpdate = (progressData, history) => dispatch => {
@@ -103,7 +103,7 @@ export const getProgressUpdates = (clientId) => dispatch => {
 	);
 };
 
-//Get post
+//Get progress update
 export const getProgressUpdate = (id) => dispatch => {
 	dispatch(setProgressUpdateLoading());
 	axios.get(`/api/progress_updates/${id}`)
@@ -119,6 +119,26 @@ export const getProgressUpdate = (id) => dispatch => {
 		})
 	);
 };
+
+//Get progress signed urls of photos
+export const getProgressPhotos = (client_id, date, num_photos) => dispatch => {
+	//dispatch(setProgressUpdateLoading());
+	axios.get(`/api/progress_updates/photos/${client_id}/${date}/${num_photos}`)
+	.then(res => {
+		dispatch({
+			type: GET_PROGRESS_PHOTOS,
+			payload: res.data
+		})
+	})
+	.catch(err => dispatch({
+			type: GET_PROGRESS_PHOTOS,
+			payload: null
+		})
+	);
+};
+
+
+
 
 //Add comment
 export const addComment = (postId, commentData) => dispatch => {

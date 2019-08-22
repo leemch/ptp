@@ -1,8 +1,9 @@
-import { ADD_PROGRESS_UPDATE, GET_PROGRESS_UPDATES, PROGRESS_UPDATE_LOADING, DELETE_PROGRESS_UPDATE, GET_PROGRESS_UPDATE } from "../actions/types";
+import { ADD_PROGRESS_UPDATE, GET_PROGRESS_UPDATES, PROGRESS_UPDATE_LOADING, DELETE_PROGRESS_UPDATE, GET_PROGRESS_UPDATE, GET_PROGRESS_PHOTOS } from "../actions/types";
 
 const initialState = {
 	progressUpdates: [],
 	progressUpdate: {},
+	photos: [],
 	loading: false
 }
 
@@ -31,6 +32,14 @@ export default function(state = initialState, action) {
 		loading: false
 	};
 	break;
+
+	case GET_PROGRESS_PHOTOS:
+		return {
+			...state,
+			photos: action.payload,
+			loading: false
+		};
+		break;
 
 	case ADD_PROGRESS_UPDATE:
 		return{

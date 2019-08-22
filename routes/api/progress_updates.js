@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const passport = require("passport");
+const moment = require("moment");
+
 
 // ProgressUpdate model
 const ProgressUpdate = require("../../models/ProgressUpdate");
@@ -13,6 +15,7 @@ const Profile = require("../../models/Profile");
 
 //Validation
 const validatePostInput = require("../../validation/post");
+const isTrainer = require("../../validation/is-trainer");
 
 const {upload} = require("../../services/image-upload");
 
@@ -112,25 +115,50 @@ router.post("/", passport.authenticate("jwt", {session: false}), (req,res) => {
 	//	return res.status(400).json(errors);
 	//}
 
+	if(req.user.isTrainer) {
+		return res.status(400).json({notClient: "You cant post progress updates."});
+	}
+
 	multipleUpload(req, res, err => {
         if(err){
             return res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}]});
-        }
-		const newProgressUpdate = new ProgressUpdate({
-			client: req.user.id,
-			weight: req.body.weight,
-			macros: {
-				fat: req.body.fat,
-				protein: req.body.protein,
-				carbs: req.body.carbs
-			},
-			notes: req.body.notes,
-			photos: req.body.photos
+		}
 
-		});
+		const currentDate = moment().startOf('day');
+		console.log(currentDate);
+		
+		ProgressUpdate.findOne({client: req.user.id, 
+			date: {
+				"$gte": currentDate
+			}
+		})
+		.then(update => {
+			if(update){
+				return res.status(400).json({exists: "Progress update was already posted today."});
+			}
+			else{
+				const newProgressUpdate = new ProgressUpdate({
+					client: req.user.id,
+					weight: req.body.weight,
+					macros: {
+						fat: req.body.fat,
+						protein: req.body.protein,
+						carbs: req.body.carbs
+					},
+					notes: req.body.notes,
+					photos: req.body.photos
+		
+				});
+			
+				newProgressUpdate.save()
+				.then(progress => res.json(progress));
+			}
+		})
+		.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}))
+
+
 	
-		newProgressUpdate.save()
-		.then(progress => res.json(progress));
+
     });
 
 	
@@ -185,6 +213,94 @@ router.get('/photos/:client_id/:date/:num_photos',passport.authenticate("jwt", {
 	
 	//res.json(getPhotoUrls(req.params.client_id, req.params.date, req.params.numPhotos));
 });
+
+
+//@route   POST api/progress_updates/comment/:id
+//@desc    Add comment to progress update
+//@access  Private
+router.post("/comment/:id", passport.authenticate("jwt", {session: false}), (req, res) => {
+
+	const {errors, isValid} = validatePostInput(req.body);
+	
+		//Check validation
+		if(!isValid){
+			//If any errors, send 400 with errors object
+			return res.status(400).json(errors);
+		}
+
+		ProgressUpdate.findById(req.params.id)
+		.then(pu => {
+			if(req.user.isTrainer){
+
+				if(isTrainer(pu.client, req.user.id)) {
+
+						const newComment = {
+							text: req.body.text,
+							name: req.body.name,
+							avatar: req.body.avatar,
+							user: req.user.id
+						}
+				
+						// Add to comments array
+						pu.comments.unshift(newComment);
+						pu.save().then(pu => res.json(pu.comments))					
+				}
+	
+			}
+
+			else {
+
+					const newComment = {
+						text: req.body.text,
+						name: req.body.name,
+						avatar: req.body.avatar,
+						user: req.user.id
+					}
+			
+					// Add to comments array
+					pu.comments.unshift(newComment);
+					pu.save().then(pu => res.json(pu.comments))
+
+			}
+		})
+		.catch(err => res.status(404).json({postnotfound: "No post found"}));
+
+	});
+	
+	
+	//@route   DELETE api/progress_updates/comment/:id/:comment_id
+	//@desc    Remove comment from progress update
+	//@access  Private
+	router.delete("/comment/:id/:comment_id", passport.authenticate("jwt", {session: false}), (req, res) => {
+	
+	const {errors, isValid} = validatePostInput(req.body);
+
+
+
+	ProgressUpdate.findById(req.params.id)
+		.then(pu => {
+
+			// Check to see if it exists
+			if(pu.comments.filter(comment => comment._id.toString() === req.params.comment_id).length === 0){
+				return res.status(404).json({commentnotexists: "comment does not exists"});
+			}
+	
+			//Get remove index
+			const removeIndex = pu.comments.map(item => item._id.toString()).indexOf(req.params.comment_id);
+
+			if(req.user.id == pu.comments[removeIndex].user){
+				// Splice comment from array
+				pu.comments.splice(removeIndex, 1);
+				pu.save().then(pu => res.json(pu.comments));
+			}
+			else{
+				return res.status(404).json({notauthorized: "you cannot delete this comment."});
+			}
+			
+		})
+		.catch(err => res.status(404).json({postnotfound: "No post found"}));
+	
+	});
 
   
 

@@ -14,8 +14,9 @@ import {getProgressUpdates} from "../../actions/progressUpdateActions";
 import "@fullcalendar/core/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/bootstrap/main.css";
+import { Calendar } from "@fullcalendar/core";
 
-class CalendarApp extends React.Component {
+class ProgressCalendar extends React.Component {
   calendarComponentRef = React.createRef();
 
   state = {
@@ -35,12 +36,13 @@ class CalendarApp extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot){
 
+    const {progressUpdates} = this.props.progressUpdate
+
     if (this.props.progressUpdate !== prevProps.progressUpdate) {
       let newUpdates = [];
 
-      if(this.props.progressUpdate.progressUpdates != null){
-        this.props.progressUpdate.progressUpdates.map(update => {
-          console.log(update.date);
+      if(progressUpdates != null){
+        progressUpdates.map(update => {
 
           let stringToDate = new Date(update.date);
           const dd = String(stringToDate.getDate()).padStart(2, '0');
@@ -105,17 +107,19 @@ class CalendarApp extends React.Component {
 
 
   handleEventClick = info => {
+
+    const {progressUpdates} = this.props.progressUpdate
     let dateClicked = new Date(info.event.start);
     
 
-    const updateIndex = this.props.progressUpdate.progressUpdates.findIndex(update => {
+    const updateIndex = progressUpdates.findIndex(update => {
         let progressDate = new Date(update.date);
         return (dateClicked.getDate() === progressDate.getDate() && dateClicked.getMonth() === progressDate.getMonth() && dateClicked.getFullYear() === progressDate.getFullYear())
     });
 
     if(updateIndex != -1){
-      console.log(this.props.progressUpdate.progressUpdates[updateIndex]._id);
-      this.props.history.push(`/progress_details/${this.props.progressUpdate.progressUpdates[updateIndex]._id}`);
+      console.log(progressUpdates[updateIndex]._id);
+      this.props.history.push(`/progress_details/${progressUpdates[updateIndex]._id}`);
     }
 
     
@@ -128,7 +132,7 @@ class CalendarApp extends React.Component {
   };
 }
 
-CalendarApp.propTypes = {
+ProgressCalendar.propTypes = {
   getProgressUpdates: PropTypes.func.isRequired,
   progressUpdate: PropTypes.object.isRequired
 }
@@ -137,4 +141,4 @@ const mapStateToProps = state => ({
 	progressUpdate: state.progressUpdate
 });
 
-export default connect(mapStateToProps, {getProgressUpdates} )(CalendarApp);
+export default connect(mapStateToProps, {getProgressUpdates} )(ProgressCalendar);

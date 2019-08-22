@@ -6,7 +6,7 @@ const {upload} = require("../../services/image-upload");
 const config = require("../../config/keys");
 const AWS = require('aws-sdk');
 const singleUpload = upload.single('image');
-const multipleUpload = upload.array('image',3);
+const multipleUpload = upload.array('image', 10);
 
 router.post('/',passport.authenticate("jwt", {session: false}), (req, res) => {
     singleUpload(req, res, err => {
@@ -30,14 +30,6 @@ router.post('/upload-multiple',passport.authenticate("jwt", {session: false}), (
         return res.json({'imageUpload': req.files});
     });
 });
-
-
-
-
-  
-
-
-
 
 
 

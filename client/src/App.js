@@ -30,7 +30,7 @@ import ClientList from './components/dashboard/client-list/ClientList';
 
 
 import './App.css';
-import Calendar from './components/progress-updates/Calendar';
+import Calendar from './components/progress-updates/ProgressCalendar';
 import ProgressUpdateForm from './components/client/progress-update/ProgressUpdateForm';
 import ProgressUpdatePost from './components/progress-updates/progressUpdatePost/Post';
 
