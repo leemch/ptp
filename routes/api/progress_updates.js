@@ -16,11 +16,12 @@ const Profile = require("../../models/Profile");
 //Validation
 const validatePostInput = require("../../validation/post");
 const isTrainer = require("../../validation/is-trainer");
+const isAuthorized = require("../../validation/is-authorized");
 
 const {upload} = require("../../services/image-upload");
 
 const singleUpload = upload.single('image');
-const multipleUpload = upload.array('image',3);
+const multipleUpload = upload.array('image',10);
 
 
 const config = require("../../config/keys");
@@ -40,7 +41,15 @@ router.get("/urltest", (req, res) => res.json(getPhotoUrls('5c980b03602eba1d1497
 //@access  Private
 router.get("/all/:client_id",passport.authenticate("jwt", {session: false}), (req, res) => {
 
-if(req.user.isTrainer){
+
+	if(isAuthorized(req.params.client_id, req.user.id)){
+		ProgressUpdate.find({client: req.params.client_id})
+			.sort({date: -1})
+			.then(progress => res.json(progress))
+			.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}));
+	}
+
+/*if(req.user.isTrainer){
 	Trainer.findById(req.user.id)
 	.then(trainer => {
 
@@ -66,13 +75,20 @@ if(req.user.isTrainer){
 		return res.status(404).json({notclient: "These are not your updates"});
 	}
 }
+
+*/
 });
 
 
 //@route   GET api/progress_updates/:id
 //@desc    Get progress update by id
 //@access  Private
-router.get("/:id",passport.authenticate("jwt", {session: false}), (req, res) => {
+router.get("/:client_id",passport.authenticate("jwt", {session: false}), (req, res) => {
+
+
+	//if(isAuthorized(req.))
+
+
 	if(req.user.isTrainer){
 		Trainer.findById(req.user.id)
 		.then(trainer => {
