@@ -141,9 +141,9 @@ export const getProgressPhotos = (client_id, date, num_photos) => dispatch => {
 
 
 //Add comment
-export const addComment = (postId, commentData) => dispatch => {
+export const addComment = (progressUpdateId, commentData) => dispatch => {
 	dispatch(clearErrors());
-	axios.post(`/api/posts/comment/${postId}`, commentData)
+	axios.post(`/api/progress_updates/comment/${progressUpdateId}`, commentData)
 	.then(res => {
 		dispatch({
 			type: GET_PROGRESS_UPDATE,
@@ -158,8 +158,8 @@ export const addComment = (postId, commentData) => dispatch => {
 };
 
 //Delete comment
-export const deleteComment = (postId, commentId) => dispatch => {
-	axios.delete(`/api/posts/comment/${postId}/${commentId}`)
+export const deleteComment = (progressUpdateId, commentId) => dispatch => {
+	axios.delete(`/api/progress_updates/comment/${progressUpdateId}/${commentId}`)
 	.then(res => {
 		dispatch({
 			type: GET_PROGRESS_UPDATE,

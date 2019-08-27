@@ -41,13 +41,16 @@ router.get("/urltest", (req, res) => res.json(getPhotoUrls('5c980b03602eba1d1497
 //@access  Private
 router.get("/all/:client_id",passport.authenticate("jwt", {session: false}), (req, res) => {
 
-
-	if(isAuthorized(req.params.client_id, req.user.id)){
+	
+	isAuthorized(req.params.client_id, req.user.id, () => {
 		ProgressUpdate.find({client: req.params.client_id})
 			.sort({date: -1})
 			.then(progress => res.json(progress))
 			.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}));
-	}
+	});
+		
+		
+	
 
 /*if(req.user.isTrainer){
 	Trainer.findById(req.user.id)
@@ -83,38 +86,18 @@ router.get("/all/:client_id",passport.authenticate("jwt", {session: false}), (re
 //@route   GET api/progress_updates/:id
 //@desc    Get progress update by id
 //@access  Private
-router.get("/:client_id",passport.authenticate("jwt", {session: false}), (req, res) => {
+router.get("/:id",passport.authenticate("jwt", {session: false}), (req, res) => {
 
-
-	//if(isAuthorized(req.))
-
-
-	if(req.user.isTrainer){
-		Trainer.findById(req.user.id)
-		.then(trainer => {
 	
-			if(trainer.client_list.filter(trainersClient => trainersClient.client === req.params.client_id)){
-				
-				ProgressUpdate.findById(req.params.id)
-				.then(progress => res.json(progress))
-				.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}));
-			}
-			else{
-				return res.status(404).json({notclient: "This is not your client."});
-			}
+
+	ProgressUpdate.findById(req.params.id)
+		.then(progress => {
+			isAuthorized(progress.client, req.user.id, () => {
+				res.json(progress);
+			});	
 		})
-		.catch(err => res.status(404).json({notrainer: "Trainer not found"}));
-	} else {
-		if(req.user.id === req.params.client_id){
-			ProgressUpdate.findById(req.params.id)
-				.then(progress => res.json(progress))
-				.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}));
-		}
-		else{
-			return res.status(404).json({notclient: "These are not your updates"});
-		}
-	}
-	});
+		.catch(err => res.status(404).json({noupdatesfound: "No progress update found for that client."}));
+});
 
 
 
@@ -246,6 +229,15 @@ router.post("/comment/:id", passport.authenticate("jwt", {session: false}), (req
 
 		ProgressUpdate.findById(req.params.id)
 		.then(pu => {
+
+			if(isAuthorized(req.params.client_id, req.user.id)){
+				ProgressUpdate.find({client: req.params.client_id})
+					.sort({date: -1})
+					.then(progress => res.json(progress))
+					.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}));
+			}
+
+
 			if(req.user.isTrainer){
 
 				if(isTrainer(pu.client, req.user.id)) {
@@ -259,7 +251,7 @@ router.post("/comment/:id", passport.authenticate("jwt", {session: false}), (req
 				
 						// Add to comments array
 						pu.comments.unshift(newComment);
-						pu.save().then(pu => res.json(pu.comments))					
+						pu.save().then(pu => res.json(pu))					
 				}
 	
 			}
@@ -275,7 +267,7 @@ router.post("/comment/:id", passport.authenticate("jwt", {session: false}), (req
 			
 					// Add to comments array
 					pu.comments.unshift(newComment);
-					pu.save().then(pu => res.json(pu.comments))
+					pu.save().then(pu => res.json(pu))
 
 			}
 		})
@@ -307,7 +299,7 @@ router.post("/comment/:id", passport.authenticate("jwt", {session: false}), (req
 			if(req.user.id == pu.comments[removeIndex].user){
 				// Splice comment from array
 				pu.comments.splice(removeIndex, 1);
-				pu.save().then(pu => res.json(pu.comments));
+				pu.save().then(pu => res.json(pu));
 			}
 			else{
 				return res.status(404).json({notauthorized: "you cannot delete this comment."});
