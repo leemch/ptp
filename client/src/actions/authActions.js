@@ -9,7 +9,7 @@ import {SET_CURRENT_USER} from "./types";
 // Register User
 export const registerUser = (userData, history) => dispatch => {
 	axios.post("/api/users/register", userData)
-	.then(res => history.push("/login"))
+	.then(res => history.push("/dashboard"))
 	.catch(err => dispatch({
 			type: GET_ERRORS,
 			payload: err.response.data
@@ -20,7 +20,7 @@ export const registerUser = (userData, history) => dispatch => {
 // Register Client with trainer by Id
 export const registerClientById = (userData, trainerId, history) => dispatch => {
 	axios.post(`/api/users/client_register/${trainerId}`, userData)
-	.then(res => history.push("/login"))
+	.then(res => history.push("/dashboard"))
 	.catch(err => dispatch({
 			type: GET_ERRORS,
 			payload: err.response.data
@@ -32,7 +32,7 @@ export const registerClientById = (userData, trainerId, history) => dispatch => 
 // Register Client By handle
 export const registerClientByHandle = (userData, trainerHandle, history) => dispatch => {
 	axios.post(`/api/users/client_register/${trainerHandle}`, userData)
-	.then(res => history.push("/login"))
+	.then(res => history.push("/dashboard"))
 	.catch(err => dispatch({
 			type: GET_ERRORS,
 			payload: err.response.data

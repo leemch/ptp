@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {getCurrentMacros, deleteAccount, getPhotos} from "../../actions/clientActions";
+import {getCurrentMacros, deleteAccount} from "../../actions/clientActions";
 import ProfileHeader from '../profile/ProfileHeader'
 import Spinner from "../common/Spinner";
 import ProfileActions from "./ProfileActions";
@@ -14,12 +14,14 @@ import isEmpty from "../../validation/isEmpty"
 class Dashboard extends Component {
 
   state = {
-    photos: {}
+    fat: 0,
+    protein: 0,
+    carbs: 0
   }
 
 	componentDidMount(){
 
-      //this.props.getCurrentMacros();
+      //this.props.getCurrentMacros():
 		
 	}
 
@@ -30,68 +32,72 @@ class Dashboard extends Component {
 		let dashboardContent;
 				dashboardContent = (
 					
-					<div>
-
 					<div className="row">
-            <div className="col-md-12">
-              <div className="card card-body bg-info text-white mb-3">
-                <div className="row">
-                  <div className="col-4 col-md-3 m-auto">
-                    <img className="rounded-circle" src={profile.user.avatar} alt="" />
-                  </div>
-                </div>
-                <div className="text-center">
-                  <h1 className="display-4 text-center">{profile.user.name}</h1>
-                  <p className="lead text-center">{profile.status}{isEmpty(profile.company) ? null : (<span> at {profile.company}</span>)}</p>
-                  {isEmpty(profile.company) ? null : (<p>{profile.location}</p>)}
-                  <p>
 
-                  {isEmpty(profile.website) ? null : (
-                  	<a className="text-white p-2" href={profile.website} target="_blank">
-                      <i className="fas fa-globe fa-2x"></i>
-                    </a>
-                  )}
-                  
+          <div className="col-md-6">
+					<h3 className="text-center text-info">Nutrition</h3>
+					
+					<div className="table-responsive">
+						<table className="table table-striped table-lg table-bordered table-dark padding-4">
+						<thead>
+							<tr>
+							<th>Macronutrients</th>
+							<th>Goal</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+							<td>Protein</td>
+							<td>{protein}g</td>
+							</tr>
+						</tbody>
+						<tbody>
+							<tr>
+							<td>Fat</td>
+							<td>{fat}g</td>
+							</tr>
+						</tbody>
+						<tbody>
+							<tr>
+							<td>Carbohydrates</td>
+							<td>{carbs}g</td>
+							</tr>
+						</tbody>
+						<tbody>
+							<tr>
+							<td>Your calorie goal</td>
+							<td>{(fat*9)+(protein*3)+(carbs*3)} Calories</td>
+							</tr>
+						</tbody>
 
-                    {isEmpty(profile.social.twitter) ? null : (
-                      <a className="text-white p-2" href={profile.social.twitter} target="_blank">
-                        <i className="fab fa-twitter fa-2x"></i>
-                      </a>
-                    )}
-                    {isEmpty(profile.social.facebook) ? null : (
-                      <a className="text-white p-2" href={profile.social.facebook} target="_blank">
-                        <i className="fab fa-facebook fa-2x"></i>
-                      </a>
-                    )}
-                    {isEmpty(profile.social.linkedin) ? null : (
-                      <a className="text-white p-2" href={profile.social.linkedin} target="_blank">
-                        <i className="fab fa-linkedin fa-2x"></i>
-                      </a>
-                    )}
-                    {isEmpty(profile.social.instagram) ? null : (
-                      <a className="text-white p-2" href={profile.social.instagram} target="_blank">
-                        <i className="fab fa-instagram fa-2x"></i>
-                      </a>
-                    )}
-                    {isEmpty(profile.social.youtube) ? null : (
-                      <a className="text-white p-2" href={profile.social.youtube} target="_blank">
-                        <i className="fab fa-youtube fa-2x"></i>
-                      </a>
-                    )}
-                
-                  
+						</table>
+					</div>
 
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-					Current Macros:
-					<br/>
-					Fat: {fat}, Protein: {protein}, Carbs: {carbs}
-					<br />
+				</div>
 
-					Training Split:
+
+				<div className="col-md-6">
+					<h3 className="text-center text-info">Training</h3>
+
+					<div className="table-responsive">
+						<table className="table table-striped table-lg table-bordered table-dark padding-4">
+						<tbody>
+							<tr>
+							<td>Calories to burn:</td>
+							<td></td>
+							</tr>
+						</tbody>
+						<tbody>
+							<tr>
+							<td>Strength goals:</td>
+							<td></td>
+							</tr>
+						</tbody>
+
+						</table>
+					</div>
+					
+				</div>
 					
 					<Link className="btn btn-primary" to={`/progress_add/`}>
 					<i className="fas fa-share-square fa-2x" aria-hidden="true"></i>

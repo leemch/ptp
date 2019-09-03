@@ -14,7 +14,6 @@ class Register extends Component {
 			email: "",
 			password: "",
       password2: "",
-      signupcode: "",
 			errors: {}
 		}
 
@@ -44,8 +43,7 @@ class Register extends Component {
 			name: this.state.name,
 			email: this.state.email,
 			password: this.state.password,
-      password2: this.state.password2,
-      signupcode: this.state.signupcode
+      password2: this.state.password2
 		}
 
 		this.props.registerClientByHandle(newUser, this.props.match.params.trainer_handle, this.props.history);
@@ -57,8 +55,6 @@ class Register extends Component {
 	render() {
 
 		const {errors} = this.state;
-
-
 
 		return(
 		<div className="register">
@@ -98,13 +94,6 @@ class Register extends Component {
               value={this.state.password2}
               onChange={this.onChange}
               error={errors.password2}
-            />
-            <TextFieldGroup
-              placeholder="Sign Up Code"
-              name="signupcode"
-              value={this.state.signupcode}
-              onChange={this.onChange}
-              error={errors.signupcode}
             />
             <input type="submit" className="btn btn-info btn-block mt-4" />
           </form>

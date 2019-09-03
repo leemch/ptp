@@ -49,9 +49,6 @@ router.post("/register", (req, res) => {
 			})
 
 
-			
-
-
 			const newUser = new User({
 				name: req.body.name,
 				email: req.body.email,
@@ -60,7 +57,6 @@ router.post("/register", (req, res) => {
 				isTrainer: req.body.isTrainer,
 				client_list: []
 			});
-
 
 
 			bcrypt.genSalt(10, (err, salt) => {
@@ -115,7 +111,6 @@ router.post("/client_register/:handle", (req, res) => {
 				password: req.body.password,
 				current_trainer: null
 			});
-
 
 
 			bcrypt.genSalt(10, (err, salt) => {
@@ -339,17 +334,19 @@ router.post("/macros/:client_id", passport.authenticate("jwt", {session: false})
 		.then(trainer => {
 			const clientIndex = trainer.client_list.findIndex(trainersClient => trainersClient.client == client_id);
 			if(clientIndex !== -1){
-				const newMacros = {
-					fat: req.body.fat,
-					protein: req.body.protein,
-					carbs: req.body.carbs
-				}
 				Client.findById(client_id)
 				.then(client => {
 					if(!client){
 						console.log("poo");
 						return res.status(400).json({noclient: "this client does not exist"});
 					}
+
+					const newMacros = {
+						fat: req.body.fat,
+						protein: req.body.protein,
+						carbs: req.body.carbs
+					}
+
 					client.macros = newMacros;
 					client.save().then(client => res.json(client.macros));	
 				});

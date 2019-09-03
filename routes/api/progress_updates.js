@@ -49,37 +49,6 @@ router.get("/all/:client_id",passport.authenticate("jwt", {session: false}), (re
 			.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}));
 	});
 		
-		
-	
-
-/*if(req.user.isTrainer){
-	Trainer.findById(req.user.id)
-	.then(trainer => {
-
-		if(trainer.client_list.filter(trainersClient => trainersClient.client === req.params.client_id)){
-			ProgressUpdate.find({client: req.params.client_id})
-			.sort({date: -1})
-			.then(progress => res.json(progress))
-			.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}));
-		}
-		else{
-			return res.status(404).json({notclient: "This is not your client."});
-		}
-	})
-	.catch(err => res.status(404).json({notrainer: "Trainer not found"}));
-} else {
-	if(req.user.id === req.params.client_id){
-		ProgressUpdate.find({client: req.params.client_id})
-			.sort({date: -1})
-			.then(progress => res.json(progress))
-			.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}));
-	}
-	else{
-		return res.status(404).json({notclient: "These are not your updates"});
-	}
-}
-
-*/
 });
 
 

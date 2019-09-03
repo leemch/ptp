@@ -6,8 +6,7 @@ module.exports = function validateProfileInput(data) {
 	let errors = {};
 
 	data.handle = !isEmpty(data.handle) ? data.handle : "";
-	data.status = !isEmpty(data.status) ? data.status : "";
-	data.skills = !isEmpty(data.skills) ? data.skills : "";
+	data.services = !isEmpty(data.services) ? data.services : "";
 
 
 
@@ -20,12 +19,9 @@ module.exports = function validateProfileInput(data) {
 		errors.handle = "Profile handle is required";
 	}
 
-	if(Validator.isEmpty(data.status)){
-		errors.status = "Status field is required";
-	}
 
-	if(Validator.isEmpty(data.skills)){
-		errors.skills = "skills field is required";
+	if(Validator.isEmpty(data.services)){
+		errors.services = "services field is required";
 	}
 
 	if(!isEmpty(data.website)){
@@ -59,12 +55,6 @@ module.exports = function validateProfileInput(data) {
 			errors.instagram = "Not a valid URL";
 		}
 	}
-
-
-
-
-
-
 
 
 	return{

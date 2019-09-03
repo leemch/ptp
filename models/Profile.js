@@ -14,11 +14,6 @@ const ProfileSchema = new Schema({
 		required: true,
 		max: 40
 	},
-	signupcode: {
-		type: String,
-		required: false,
-		max: 40
-	},
 	company: {
 		type: String,
 	},
@@ -28,18 +23,11 @@ const ProfileSchema = new Schema({
 	location: {
 		type: String
 	},
-	status: {
-		type: String,
-		required: true
-	},
-	skills: {
+	services: {
 		type: [String]
 	},
 	bio: {
 		type: String,
-	},
-	githubusername: {
-		type: String
 	},
 	experience: [
 		{
