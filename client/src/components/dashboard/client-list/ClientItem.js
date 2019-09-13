@@ -16,9 +16,9 @@ class ClientItem extends Component {
 	constructor() {
 		super();
 		this.state = {
-			fat: "0",
-			protein: "0",
-			carbs: "0"
+			fat: 0,
+			protein: 0,
+			carbs: 0
 		}
 
 	}
@@ -38,6 +38,10 @@ class ClientItem extends Component {
 		console.log(this.props.id);
 		this.props.setClientMacros(client.client._id, newMacros);
 
+	}
+
+	loadMacros = (client_id) => {
+		
 	}
 
 
@@ -78,7 +82,7 @@ class ClientItem extends Component {
 							</div>
 							<div className="modal-footer">
 								<button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-								<button type="button" onClick={() => this.setCurrentMacros(client)} className="btn btn-primary">Save changes</button>
+								<button type="button" onClick={() => this.setCurrentMacros(client)} className="btn btn-primary">Save macros</button>
 							</div>
 							</div>
 						</div>

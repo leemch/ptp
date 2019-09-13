@@ -10,6 +10,8 @@ const passport = require("passport");
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 
+const isAuthorized = require("../../validation/is-authorized");
+
 // Load client model
 const Client = require("../../models/Client");
 const Trainer = require("../../models/User");
@@ -25,25 +27,26 @@ router.get("/test", (req, res) => res.json("Clients works"));
 
 
 //@route   GET api/clients/macros
-//@desc    Gets current macros from trainer
+//@desc    Gets current macros from client by ID.
 //@access  Private
 
-router.get("/macros", passport.authenticate("jwt", {session: false}), (req, res) => {
-	const client_id = req.user.id;
-	const trainer_id = req.user.current_trainer;
 
-	Trainer.findById(trainer_id)
-	.then(trainer => {
-		const clientInfo = trainer.client_list.filter(trainersClient => trainersClient.client == client_id);
+router.get("/macros/:client_id", passport.authenticate("jwt", {session: false}), (req, res) => {
 
-		const macros = {
-			fat: clientInfo[0].macros.fat ? clientInfo[0].macros.fat : "",
-			protein: clientInfo[0].macros.protein ? clientInfo[0].macros.protein : "",
-			carbs: clientInfo[0].macros.carbs ? clientInfo[0].macros.carbs : ""
-		}
-		
-		res.json(macros);
-	});
+	Client.findById(req.params.client_id)
+	.then(client => {
+		isAuthorized(req.params.client_id, req.user.id, () => {
+			const macros = {
+				fat: client.macros.fat ? client.macros.fat : 0,
+				protein: client.macros.protein ? client.macros.protein : 0,
+				carbs: client.macros.carbs ? client.macros.carbs : 0
+			}
+			
+			res.json(macros);
+		})
+
+	})
+	.catch(err => res.status(404).json({noclient: "Client not found."}));
 
 });
 

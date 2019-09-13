@@ -68,8 +68,9 @@ class Post extends Component {
 			postContent = (
 				<div>
 					<h1 className="display-4 text-center"> Check In Date: {progressDate}</h1>
+					<h1 className="display-4 text-center"> Weigh in: {progressUpdate.weight}lbs</h1>
 					<PhotoSlides photos={photos} />
-					<ProgressDetails fat={this.state.fat} protein={this.state.protein} carbs={this.state.carbs}/>
+					<ProgressDetails fat={this.state.fat} protein={this.state.protein} carbs={this.state.carbs} notes={progressUpdate.notes}/>
 					<CommentForm postId={progressUpdate._id} />
 					<CommentFeed postId={progressUpdate._id} comments={progressUpdate.comments} />
 				</div>

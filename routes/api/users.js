@@ -10,6 +10,9 @@ const passport = require("passport");
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 
+
+const isAuthorized = require("../../validation/is-authorized");
+
 // Load user model
 const TrainerProfile = require("../../models/Profile");
 const Client = require("../../models/Client");
@@ -324,42 +327,24 @@ router.get("/clients",passport.authenticate("jwt", {session: false}), (req, res)
 //@access  Private
 
 router.post("/macros/:client_id", passport.authenticate("jwt", {session: false}), (req, res) => {
-	const trainer_id = req.user.id;
-	const isTrainer = req.user.isTrainer;
-	const client_id = req.params.client_id
 
-
-	if(isTrainer){
-		User.findById(trainer_id)
-		.then(trainer => {
-			const clientIndex = trainer.client_list.findIndex(trainersClient => trainersClient.client == client_id);
-			if(clientIndex !== -1){
-				Client.findById(client_id)
-				.then(client => {
-					if(!client){
-						console.log("poo");
-						return res.status(400).json({noclient: "this client does not exist"});
-					}
-
-					const newMacros = {
-						fat: req.body.fat,
-						protein: req.body.protein,
-						carbs: req.body.carbs
-					}
-
-					client.macros = newMacros;
-					client.save().then(client => res.json(client.macros));	
-				});
-			}
-			else {
-				return res.status(400).json({noclient: "Client could not be found"});
+	Client.findById(req.params.client_id)
+	.then(client => {
+		isAuthorized(req.params.client_id, req.user.id, () => {
+			const newMacros = {
+				fat: req.body.fat,
+				protein: req.body.protein,
+				carbs: req.body.carbs
 			}
 
+			client.macros = newMacros;
+			client.save().then(client => res.json(client.macros));
 		})
 
-	} else {
-		return res.status(400).json({error: "You are not a trainer"});
-	}
+	})
+	.catch(err => res.status(404).json({noclient: "Client not found."}));
+
+
 });
 
 //@route   GET api/users/current

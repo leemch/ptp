@@ -4,13 +4,17 @@ import React, {Component} from 'react';
 
 class ProgressDetails extends Component {
 	render(){
-		const {fat, protein, carbs} = this.props;
+		const {fat, protein, carbs, notes} = this.props;
 
 
 
 		return(
+			
 			<div className="row">
+				
+			
 				<div className="col-md-6">
+
 					<h3 className="text-center text-info">Nutrition</h3>
 					
 					<div className="table-responsive">
@@ -74,6 +78,22 @@ class ProgressDetails extends Component {
 					</div>
 					
 				</div>
+
+				{notes != "" ? (
+				<div>
+				<h3 className="text-center text-info">Notes</h3>
+				<div className="table-responsive">
+						<table className="table table-striped table-lg table-bordered table-dark padding-4">
+						{notes}
+
+						</table>
+					</div>
+				</div>
+				)
+				: null
+				}
+
+				
 			</div>
 		
 		)
