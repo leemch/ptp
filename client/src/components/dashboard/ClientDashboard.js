@@ -14,19 +14,21 @@ import isEmpty from "../../validation/isEmpty"
 class Dashboard extends Component {
 
   state = {
-    fat: 0,
-    protein: 0,
-    carbs: 0
+    macros: {
+		fat: 0,
+		protein: 0,
+		carbs: 0
+	}
   }
 
 	componentDidMount(){
 
-      //this.props.getCurrentMacros():
+      console.log(this.props.getCurrentMacros());
 		
 	}
 
 	render() {
-		const {fat, protein, carbs} = this.props.macros;
+		const {fat, protein, carbs} = this.state.macros;
 		const {profile} = this.props;
 
 		let dashboardContent;

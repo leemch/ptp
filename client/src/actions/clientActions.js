@@ -4,21 +4,14 @@ import {GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_ERRORS, SET_CUR
 
 
 // Get current macros
-export const getCurrentMacros = () => dispatch => {
+export const getCurrentMacros = (client_id) => dispatch => {
 	//dispatch(setProfileLoading());
-	axios.get("/api/clients/macros")
-	.then(res => 
-		dispatch({
-			type: GET_CLIENT_MACROS,
-			payload: res.data
-		})
+	axios.get(`/api/clients/macros/${client_id}`)
+	.then(res => {
+			return res;
+		}
 	)
-	.catch(err => 
-		dispatch({
-			type: GET_CLIENT_MACROS,
-			payload: {}
-		})
-	)
+	return null;
 }
 
 // Get current profile
