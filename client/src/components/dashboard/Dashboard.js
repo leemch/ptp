@@ -57,6 +57,135 @@ class Dashboard extends Component {
 						<div>
 						<p className="lead text-muted"> Welcome <Link to={'/profile/' + profile.handle}>{user.name} </Link> 
 						</p>
+
+						<section id="actions" className="py-4 mb-4 bg-light">
+							<div className="container">
+								<div className="row">
+									<div className="col-md-3">
+										<a href="#" className="btn btn-primary btn-block" data-toggle="modal" data-target="#addProgressModal">
+											<i className="fas fa-plus"></i> Add Progress Update
+										</a>
+									</div>
+									<div className="col-md-3">
+										<a href="#" className="btn btn-success btn-block" data-toggle="modal" data-target="#clientListModal">
+											<i className="fas fa-plus"></i> Client List
+										</a>
+									</div>
+									<div className="col-md-3">
+										<a href="#" className="btn btn-warning btn-block" data-toggle="modal" data-target="#inviteClientModal">
+											<i className="fas fa-plus"></i> Invite Client
+										</a>
+									</div>
+								</div>
+							</div>
+						</section>
+
+
+						<div className="modal fade" id="addProgressModal">
+							<div className="modal-dialog modal-lg">
+								<div className="modal-content">
+									<div className="modal-header bg-primary text-white">
+										<h5 className="modal-title">Add Post</h5>
+										<button className="close" data-dismiss="modal">
+											<span>&times;</span>
+										</button>
+									</div>
+									<div className="modal-body">
+										<form>
+											<div className="form-group">
+												<label for="title">Title</label>
+												<input type="text" className="form-control" />
+											</div>
+											<div className="form-group">
+												<label for="category">Category</label>
+												<select className="form-control">
+													<option value="">Web Development</option>
+													<option value="">Tech Gadgets</option>
+													<option value="">Business</option>
+													<option value="">Health & Wellness</option>
+												</select>
+											</div>
+											<div className="form-group">
+												<label for="image">Upload Images</label>
+												<div className="custom-file">
+													<input type="file" className="custom-file-input" id="image" />
+													<label for="image" className="custom-file-label">Choose File</label>		
+												</div>
+												<small className="form-text text-muted">Max Size 3mb </small>
+											</div>
+											<div className="form-group">
+												<label for="body">Body</label>
+												<textarea name="editor1" className="form-control"></textarea>
+											</div>
+										</form>
+									</div>
+									<div className="modal-footer">
+										<button className="btn btn-success" data-dismiss="modal">Save Changes</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div className="modal fade" id="clientListModal">
+							<div className="modal-dialog modal-lg">
+								<div className="modal-content">
+									<div className="modal-header bg-success text-white">
+										<h5 className="modal-title">Add Post</h5>
+										<button className="close" data-dismiss="modal">
+											<span>&times;</span>
+										</button>
+									</div>
+									<div className="modal-body">
+										<form>
+											<div className="form-group">
+												<label for="title">Title</label>
+												<input type="text" className="form-control" />
+											</div>
+											
+										</form>
+									</div>
+									<div className="modal-footer">
+										<button className="btn btn-primary" data-dismiss="modal">Save Changes</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div className="modal fade" id="inviteClientModal">
+							<div className="modal-dialog modal-lg">
+								<div className="modal-content">
+									<div className="modal-header bg-warning text-white">
+										<h5 className="modal-title">Invite Client</h5>
+										<button className="close" data-dismiss="modal">
+											<span>&times;</span>
+										</button>
+									</div>
+									<div className="modal-body">
+										<form>
+											<div className="form-group">
+												<label for="name">Name</label>
+												<input type="text" className="form-control" />
+											</div>
+											<div className="form-group">
+												<label for="email">Email</label>
+												<input type="email" className="form-control" />
+											</div>
+											
+										</form>
+									</div>
+									<div className="modal-footer">
+										<button className="btn btn-warning" data-dismiss="modal">Save Changes</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+
+
 						{/* <ProfileActions />
 						<Experience experience={profile.experience} />
 						<Education education={profile.education} />
@@ -98,9 +227,6 @@ class Dashboard extends Component {
 		return(
 
 			<div className="dashboard">
-
-				
-
 				<div className="container">
 					<div className="row">
 						<div className="col-md-12">
