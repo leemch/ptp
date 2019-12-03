@@ -67,7 +67,31 @@ const ClientSchema = new Schema({
 		sunday: {
 			type: String
 		}
-	}
+	},
+	personalRecords: {
+		bench: {
+			type: Number,
+			default: 0
+		},
+		squat: {
+			type: Number,
+			default: 0
+		},
+		deadlift: {
+			type: Number,
+			default: 0
+		}
+	},
+	meals: [
+		{
+			name: {
+				type: String
+			},
+			description: {
+				type: String
+			}
+		}
+	]
 
 });
 

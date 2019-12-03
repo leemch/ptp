@@ -98,11 +98,21 @@ class Dashboard extends Component {
 		return(
 
 			<div className="dashboard">
+
+				
+
 				<div className="container">
 					<div className="row">
 						<div className="col-md-12">
-						
-							<h1 className="center"> Dashboard</h1>
+							<header id="main-header" className="py-2 bg-primary text-white rounded">
+								<div className="container">
+									<div className="row">
+										<div className="col-md-6">
+											<h1><i className=" fas fa-cog"></i> Dashboard</h1>
+										</div>
+									</div>
+								</div>
+							</header>
 							{dashboardContent}
 
 						</div>
