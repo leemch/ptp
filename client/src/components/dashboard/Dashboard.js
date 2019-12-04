@@ -81,6 +81,122 @@ class Dashboard extends Component {
 						</section>
 
 
+						<section id="posts">
+							<div className="container">
+								<div className="row">
+									<div className="col-md-9">
+										<div className="card">
+											<div className="card=header">
+												<h4>Latest Posts</h4>
+											</div>
+											<table className="table table-striped">
+												<thead className="thead-dark">
+													<tr>
+														<th>#</th>
+														<th>Title</th>
+														<th>Category</th>
+														<th>Date</th>
+														<th>#</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>2</td>
+														<td>Post two</td>
+														<td>tech gadgets</td>
+														<td>May 10</td>
+														<td>
+															<a href="details.html" className="btn btn-secondary">
+																<i className="fas fa-angle-double-right"></i> Details
+															</a>
+														</td>
+													</tr>
+													<tr>
+														<td>1</td>
+														<td>Post one</td>
+														<td>Web dev</td>
+														<td>May 10</td>
+														<td>
+															<a href="details.html" className="btn btn-secondary">
+																<i className="fas fa-angle-double-right"></i> Details
+															</a>
+														</td>
+													</tr>
+													<tr>
+														<td>1</td>
+														<td>Post one</td>
+														<td>Web dev</td>
+														<td>May 10</td>
+														<td>
+															<a href="details.html" className="btn btn-secondary">
+																<i className="fas fa-angle-double-right"></i> Details
+															</a>
+														</td>
+													</tr>
+													<tr>
+														<td>1</td>
+														<td>Post one</td>
+														<td>Web dev</td>
+														<td>May 10</td>
+														<td>
+															<a href="details.html" className="btn btn-secondary">
+																<i className="fas fa-angle-double-right"></i> Details
+															</a>
+														</td>
+													</tr>
+													<tr>
+														<td>1</td>
+														<td>Post one</td>
+														<td>Web dev</td>
+														<td>May 10</td>
+														<td>
+															<a href="details.html" className="btn btn-secondary">
+																<i className="fas fa-angle-double-right"></i> Details
+															</a>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+
+									<div className="col-md-3">
+										<div className="card text-center bg-primary text-white mb-3">
+											<div className="card-body">
+												<h3>Posts</h3>
+												<h4 className="display-4">
+												<i className="fas fa-pencil-alt"></i> 6
+												</h4>
+												<a href="posts.html" className="btn btn-outline-light btn-sm">View</a>
+											</div>
+										</div>
+										<div className="card text-center bg-success text-white mb-3">
+											<div className="card-body">
+												<h3>Categories</h3>
+												<h4 className="display-4">
+												<i className="fas fa-folder"></i> 4
+												</h4>
+												<a href="categories.html" className="btn btn-outline-light btn-sm">View</a>
+											</div>
+										</div>
+										<div className="card text-center bg-warning text-white mb-3">
+											<div className="card-body">
+												<h3>Users</h3>
+												<h4 className="display-4">
+												<i className="fas fa-users"></i> 4
+												</h4>
+												<a href="users.html" className="btn btn-outline-light btn-sm">View</a>
+											</div>
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+
+						</section>
+
+
 						<div className="modal fade" id="addProgressModal">
 							<div className="modal-dialog modal-lg">
 								<div className="modal-content">
