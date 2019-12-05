@@ -32,9 +32,9 @@ class Dashboard extends Component {
 		const {profile} = this.props;
 
 		let dashboardContent;
-				dashboardContent = (
-					
-					<div className="row">
+
+		dashboardContent = (		
+		<div className="row">
 
           <div className="col-md-6">
 					<h3 className="text-center text-info">Nutrition</h3>
@@ -111,8 +111,73 @@ class Dashboard extends Component {
 
 		return(
 				<div className="container">
+						<section id="actions" className="py-4 mb-4 bg-light">
+							<div className="container">
+								<div className="row">
+									<div className="col-md-3">
+										<a href="#" className="btn btn-light btn-block">
+											<i className="fas fa-arrow-left"></i> Back to Dashboard
+										</a>
+									</div>
+									<div className="col-md-3">
+										<a href="#" className="btn btn-success btn-block">
+											<i className="fas fa-check"></i> Save Changes
+										</a>
+									</div>
+									<div className="col-md-3">
+										<a href="#" className="btn btn-danger btn-block">
+											<i className="fas fa-trash"></i> Delete Post
+										</a>
+									</div>
+								</div>
+							</div>
+						</section>
 
-							{dashboardContent}
+						<section id="details">
+							<div className="container">
+								<div className="row">
+									<div className="col">
+										<div className="card">
+											<div className="card-header">
+												<h4>Edit Progress Update</h4>
+											</div>
+											<div className="card-body">
+												<form>
+													<div className="form-group">
+														<label for="title">Title</label>
+														<input type="text" className="form-control" value="Post One"/>
+													</div>
+													<div className="form-group">
+														<label for="category">Category</label>
+														<select className="form-control">
+															<option value="">Web Development</option>
+															<option value="">Tech Gadgets</option>
+															<option value="">Business</option>
+															<option value="">Health & Wellness</option>
+														</select>
+													</div>
+													<div className="form-group">
+														<label for="image">Upload Images</label>
+														<div className="custom-file">
+															<input type="file" className="custom-file-input" id="image" />
+															<label for="image" className="custom-file-label">Choose File</label>		
+														</div>
+														<small className="form-text text-muted">Max Size 3mb </small>
+													</div>
+													<div className="form-group">
+														<label for="body">Body</label>
+														<textarea name="editor1" className="form-control"></textarea>
+													</div>
+												</form>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</section>
+
+						{dashboardContent}
 				</div>
 		)
 	}

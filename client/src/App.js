@@ -27,6 +27,7 @@ import NotFound from './components/not-found/NotFound';
 import Posts from './components/posts/Posts';
 import Post from './components/post/Post';
 import ClientList from './components/dashboard/client-list/ClientList';
+import Settings from './components/settings/Settings';
 
 
 import './App.css';
@@ -121,6 +122,10 @@ class App extends Component {
 
           <Switch>
             <PrivateRoute exact path="/progress_add" component={ProgressUpdateForm} />
+          </Switch>
+
+          <Switch>
+            <PrivateRoute exact path="/settings" component={Settings} />
           </Switch>
 
           <Route exact path="/not-found" component={NotFound} />

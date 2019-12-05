@@ -30,7 +30,7 @@ onLogoutClick(event) {
                   <i className="fas fa-user-circle"></i>
                   Profile
                 </Link>
-                <Link className="dropdown-item" to="/">
+                <Link className="dropdown-item" to="/settings">
                   <i className="fas fa-cog"></i>
                   Settings
                 </Link>
