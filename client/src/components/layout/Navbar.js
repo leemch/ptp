@@ -6,6 +6,8 @@ import {logoutUser} from "../../actions/authActions";
 import {clearCurrentProfile} from "../../actions/profileActions";
 //import {Image} from "semantic-ui-react";
 
+import './Navbar.css';
+
 class Navbar extends Component {
 
 onLogoutClick(event) {
@@ -73,7 +75,8 @@ onLogoutClick(event) {
       <div className="container">
 
         <Link className="navbar-brand" to="/">
-        <img style={{width: '80px'}} src="http://u.cubeupload.com/leemch/ptplogo.png" /> PhysiqueTrainerPro</Link>
+          <img style={{width: '80px'}} src="http://u.cubeupload.com/leemch/ptplogo.png" /> PhysiqueTrainerPro
+        </Link>
 
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
           <span className="navbar-toggler-icon"></span>

@@ -55,35 +55,55 @@ constructor() {
     const {errors} = this.state;
 
 		return(
-			  <div className="login">
-    <div className="container">
-      <div className="row">
-        <div className="col-md-8 m-auto">
-          <h1 className="display-4 text-center">Log In</h1>
-          <p className="lead text-center">Sign in to your PhysiqueTrainerPro account</p>
-          <form onSubmit={this.onSubmit}>
-            <TextFieldGroup
-              placeholder="Email Address"
-              name="email"
-              type="email"
-              value={this.state.email}
-              onChange={this.onChange}
-              error={errors.email}
-            />
+		<div className="login">
 
-            <TextFieldGroup
-              placeholder="Password"
-              name="password"
-              type="password"
-              value={this.state.password}
-              onChange={this.onChange}
-              error={errors.password}
-            />
-            <input type="submit" className="btn btn-info btn-block mt-4" />
-          </form>
+              <header id="main-header" className="py-2 bg-info text-white rounded">
+								<div className="container">
+									<div className="row">
+										<div className="col-md-6">
+											<h1><i className=" fas fa-user"></i> Login</h1>
+										</div>
+									</div>
+								</div>
+							</header>
+
+    <section id="login">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6 mx-auto">              
+            <div className="card">
+              <div className="card-header">
+                <h4 className="lead text-center">Trainer Account Login</h4>
+              </div>
+                <div className="card-body">
+                  
+                  <form onSubmit={this.onSubmit}>
+                    <TextFieldGroup
+                      placeholder="Email Address"
+                      name="email"
+                      type="email"
+                      value={this.state.email}
+                      onChange={this.onChange}
+                      error={errors.email}
+                    />
+
+                    <TextFieldGroup
+                      placeholder="Password"
+                      name="password"
+                      type="password"
+                      value={this.state.password}
+                      onChange={this.onChange}
+                      error={errors.password}
+                    />
+                    <input type="submit" className="btn btn-info btn-block mt-4" />
+                  </form>
+                </div>
+              
+            </div>
+          </div>
         </div>
-      </div>
     </div>
+    </section>
   </div>
 
 		)
