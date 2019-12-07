@@ -6,16 +6,13 @@ img {
 .landing {
   position: relative;
   background: url('./img/gym.jpg') no-repeat;
-  
   background-size: cover;
-  background-position: center;
-  height: 100vh;
-  margin-top: -24px;
-  margin-bottom: -50px;
+  background-attachment: fixed;
+  min-height: 700px;
 }
 
 .landing-inner {
-  padding-top: 80px;
+  padding-top: 150px;
 }
 
 .landing-logo {
@@ -33,7 +30,7 @@ img {
 }
 
 .card-form {
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 .latest-profiles-img {
@@ -43,4 +40,11 @@ img {
 
 .form-control::placeholder {
   color: #bbb !important;
+}
+
+.landing .fas {
+  color: #008ed6;
+  background: #fff;
+  padding: 5px;
+  border-radius: 5px;
 }
