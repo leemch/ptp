@@ -15,7 +15,7 @@ componentDidMount() {
 		return(
 
       
-
+    <div>
       <header className="landing">
         <div className="dark-overlay">
           <div className="landing-inner container">
@@ -73,15 +73,60 @@ componentDidMount() {
                       </form>
                     </div>
                   </div>
-                </div>
-                
-              
+                </div>             
             </div>
           </div>
         </div>
+
       </header>
 
-  
+      
+        <section id="explore-head-section">
+          <div className="container">
+            <div className="row">
+              <div className="col text-center py-5">
+                <h1 className="display-4">Explore</h1>
+                <p className="lead">Lorem i[sum asdasdasdasdasdasdasdasdasdasd</p>
+                <a href="#" className="btn btn-outline-secondary">Find Out More</a>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <section id="explore-section" className="bg-light text-muted py-5">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-6">
+                <img className="img-fluid mb-3 rounded-circle" src="img/explore-section1.jpg" alt="" />
+              </div>
+              <div className="col-md-6">
+              <h3>Explore and Connect</h3>
+              <p>Lorem adfigadfiageoiryiasdfgisgfigskugfukfjhgfjhgfjhgfjhgfg</p>
+              <div className="d-flex">
+                <div className="p-4 align-self-start">
+                  <i className="fas fa-check fa-2x"></i>
+                </div>
+                <div className="p-4 align-self-end">
+                Lorem adfigadfiageoiryiasdf
+                </div>
+              </div>
+              <div className="d-flex">
+                <div className="p-4 align-self-start">
+                  <i className="fas fa-check fa-2x"></i>
+                </div>
+                <div className="p-4 align-self-end">
+                Lorem adfigadfiageoiryiasdf
+                </div>
+              </div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+    </div>
 
 		/*<div className="landing">
     <div className="dark-overlay landing-inner text-light">
