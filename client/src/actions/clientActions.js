@@ -8,10 +8,9 @@ export const getCurrentMacros = (client_id) => dispatch => {
 	//dispatch(setProfileLoading());
 	axios.get(`/api/clients/macros/${client_id}`)
 	.then(res => {
-			return res;
+			return res.data;
 		}
 	)
-	return null;
 }
 
 // Get current profile

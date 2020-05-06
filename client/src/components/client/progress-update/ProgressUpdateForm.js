@@ -75,7 +75,7 @@ class ProgressUpdateForm extends Component {
 
 	  onSuccess = (uploadedImage) => {
 		this.setState({imageUrl: uploadImage});
-		debugger;
+		//debugger;
 	  }
 	
 

@@ -81,7 +81,7 @@ class Dashboard extends Component {
 						</section>
 
 
-						<section id="posts">
+						{/* <section id="posts">
 							<div className="container">
 								<div className="row">
 									<div className="col-md-9">
@@ -296,19 +296,19 @@ class Dashboard extends Component {
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> */}
 
 
 
 
 
-						{/* <ProfileActions />
+						<ProfileActions />
 						<Experience experience={profile.experience} />
 						<Education education={profile.education} />
 						<div style={{marginBottom: "60px"}} />
-						<button onClick={this.onDeleteClick.bind(this)} className="btn btn-danger"> Delete my Account</button> */}
-						{/* <Link to="/client_list" className="btn btn-success">My Clients</Link>  */}
-						<ClientList />
+						<button onClick={this.onDeleteClick.bind(this)} className="btn btn-danger"> Delete my Account</button>
+						<Link to="/client_list" className="btn btn-success">My Clients</Link> 
+						{/* <ClientList /> */}
 
 						</div>
 					);

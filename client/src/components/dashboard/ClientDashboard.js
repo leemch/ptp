@@ -1,76 +1,85 @@
-import React, {Component} from 'react';
-import {Link} from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
-import {getCurrentMacros, deleteAccount} from "../../actions/clientActions";
+import { connect } from "react-redux";
+import { getCurrentMacros, deleteAccount } from "../../actions/clientActions";
 import ProfileHeader from '../profile/ProfileHeader'
 import Spinner from "../common/Spinner";
 import ProfileActions from "./ProfileActions";
 import Experience from "./Experience";
 import Education from "./Education";
 import isEmpty from "../../validation/isEmpty"
+import axios from "axios";
 
 
 class Dashboard extends Component {
 
-  state = {
-    macros: {
-		fat: 0,
-		protein: 0,
-		carbs: 0
+	state = {
+		macros: {
+			fat: 0,
+			protein: 0,
+			carbs: 0
+		}
 	}
-  }
 
-	componentDidMount(){
+	componentDidMount() {
 
-      console.log(this.props.getCurrentMacros());
-		
+		//console.log(this.props.getCurrentMacros(this.props.user.id));
+
+		axios.get(`/api/clients/macros/${this.props.user.id}`)
+			.then(res => {
+				this.setState({
+					macros: res.data
+				});
+			}
+		)
+
 	}
 
 	render() {
-		const {fat, protein, carbs} = this.state.macros;
-		const {profile} = this.props;
+		const { fat, protein, carbs } = this.state.macros;
+		const { profile } = this.props;
 
 		let dashboardContent;
 
-		dashboardContent = (		
-		<div className="row">
+		dashboardContent = (
+			<div className="row">
 
-          <div className="col-md-6">
+				<div className="col-md-6">
 					<h3 className="text-center text-info">Nutrition</h3>
-					
+
 					<div className="table-responsive">
 						<table className="table table-striped table-lg table-bordered table-dark padding-4">
-						<thead>
-							<tr>
-							<th>Macronutrients</th>
-							<th>Goal</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-							<td>Protein</td>
-							<td>{protein}g</td>
-							</tr>
-						</tbody>
-						<tbody>
-							<tr>
-							<td>Fat</td>
-							<td>{fat}g</td>
-							</tr>
-						</tbody>
-						<tbody>
-							<tr>
-							<td>Carbohydrates</td>
-							<td>{carbs}g</td>
-							</tr>
-						</tbody>
-						<tbody>
-							<tr>
-							<td>Your calorie goal</td>
-							<td>{(fat*9)+(protein*3)+(carbs*3)} Calories</td>
-							</tr>
-						</tbody>
+							<thead>
+								<tr>
+									<th>Macronutrients</th>
+									<th>Goal</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Protein</td>
+									<td>{protein}g</td>
+								</tr>
+							</tbody>
+							<tbody>
+								<tr>
+									<td>Fat</td>
+									<td>{fat}g</td>
+								</tr>
+							</tbody>
+							<tbody>
+								<tr>
+									<td>Carbohydrates</td>
+									<td>{carbs}g</td>
+								</tr>
+							</tbody>
+							<tbody>
+								<tr>
+									<td>Your calorie goal</td>
+									<td>{(fat * 9) + (protein * 3) + (carbs * 3)} Calories</td>
+								</tr>
+							</tbody>
 
 						</table>
 					</div>
@@ -83,57 +92,57 @@ class Dashboard extends Component {
 
 					<div className="table-responsive">
 						<table className="table table-striped table-lg table-bordered table-dark padding-4">
-						<tbody>
-							<tr>
-							<td>Calories to burn:</td>
-							<td></td>
-							</tr>
-						</tbody>
-						<tbody>
-							<tr>
-							<td>Strength goals:</td>
-							<td></td>
-							</tr>
-						</tbody>
-
+							<tbody>
+								<tr>
+									<td>Calories to burn:</td>
+									<td></td>
+								</tr>
+							</tbody>
+							<tbody>
+								<tr>
+									<td>Strength goals:</td>
+									<td></td>
+								</tr>
+							</tbody>
 						</table>
 					</div>
-					
 				</div>
-					
+
+			</div>
+		);
+
+		return (
+			<div className="container">
+				{/* <section id="actions" className="py-4 mb-4 bg-light">
+					<div className="container">
+						<div className="row">
+							<div className="col-md-3">
+								<a href="#" className="btn btn-light btn-block">
+									<i className="fas fa-arrow-left"></i> Back to Dashboard
+										</a>
+							</div>
+							<div className="col-md-3">
+								<a href="#" className="btn btn-success btn-block">
+									<i className="fas fa-check"></i> Save Changes
+										</a>
+							</div>
+							<div className="col-md-3">
+								<a href="#" className="btn btn-danger btn-block">
+									<i className="fas fa-trash"></i> Delete Post
+										</a>
+							</div>
+						</div>
+					</div>
+				</section> */}
+
+				<div className="text-center mt-5">
 					<Link className="btn btn-primary" to={`/progress_add/`}>
-					<i className="fas fa-share-square fa-2x" aria-hidden="true"></i>
+						<i className="fas fa-share-square fa-2x" aria-hidden="true"></i>
 						Send Progress Update
 					</Link>
+				</div>
 
-					</div>
-				);
-
-		return(
-				<div className="container">
-						<section id="actions" className="py-4 mb-4 bg-light">
-							<div className="container">
-								<div className="row">
-									<div className="col-md-3">
-										<a href="#" className="btn btn-light btn-block">
-											<i className="fas fa-arrow-left"></i> Back to Dashboard
-										</a>
-									</div>
-									<div className="col-md-3">
-										<a href="#" className="btn btn-success btn-block">
-											<i className="fas fa-check"></i> Save Changes
-										</a>
-									</div>
-									<div className="col-md-3">
-										<a href="#" className="btn btn-danger btn-block">
-											<i className="fas fa-trash"></i> Delete Post
-										</a>
-									</div>
-								</div>
-							</div>
-						</section>
-
-						<section id="details">
+				{/* <section id="details">
 							<div className="container">
 								<div className="row">
 									<div className="col">
@@ -175,10 +184,10 @@ class Dashboard extends Component {
 									</div>
 								</div>
 							</div>
-						</section>
+						</section> */}
 
-						{dashboardContent}
-				</div>
+				{dashboardContent}
+			</div>
 		)
 	}
 
@@ -192,6 +201,7 @@ Dashboard.propTypes = {
 
 const mapStateToProps = state => ({
 	macros: state.client.macros,
+	user: state.auth.user
 });
 
-export default connect(mapStateToProps, {getCurrentMacros, deleteAccount})(Dashboard);
+export default connect(mapStateToProps, { getCurrentMacros, deleteAccount })(Dashboard);
