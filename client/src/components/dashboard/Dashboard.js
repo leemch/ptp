@@ -58,7 +58,7 @@ class Dashboard extends Component {
 						<p className="lead text-muted"> Welcome <Link to={'/profile/' + profile.handle}>{user.name} </Link> 
 						</p>
 
-						<section id="actions" className="py-4 mb-4 bg-light">
+						{/* <section id="actions" className="py-4 mb-4 bg-light">
 							<div className="container">
 								<div className="row">
 									<div className="col-md-3">
@@ -78,7 +78,7 @@ class Dashboard extends Component {
 									</div>
 								</div>
 							</div>
-						</section>
+						</section> */}
 
 
 						{/* <section id="posts">

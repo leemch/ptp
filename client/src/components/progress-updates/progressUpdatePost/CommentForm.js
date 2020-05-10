@@ -76,16 +76,10 @@ class CommentForm extends Component {
 	}
 }
 
-CommentForm.propTypes = {
-	addPost: PropTypes.func.isRequired,
-	auth: PropTypes.object.isRequired,
-	postId: PropTypes.string.isRequired,
-	errors:PropTypes.object.isRequired
-}
 
 const mapStateToProps = state => ({
 	auth: state.auth,
-	errors: state.errors
+	errors: state.errors,
 });
 
 export default connect(mapStateToProps, {addComment})(CommentForm);

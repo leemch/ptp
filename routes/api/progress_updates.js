@@ -199,12 +199,12 @@ router.post("/comment/:id", passport.authenticate("jwt", {session: false}), (req
 		ProgressUpdate.findById(req.params.id)
 		.then(pu => {
 
-			if(isAuthorized(req.params.client_id, req.user.id)){
-				ProgressUpdate.find({client: req.params.client_id})
-					.sort({date: -1})
-					.then(progress => res.json(progress))
-					.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}));
-			}
+			// if(isAuthorized(req.params.client_id, req.user.id)){
+			// 	ProgressUpdate.find({client: req.params.client_id})
+			// 		.sort({date: -1})
+			// 		.then(progress => res.json(progress))
+			// 		.catch(err => res.status(404).json({noupdatesfound: "No progress updates found for that client."}));
+			// }
 
 
 			if(req.user.isTrainer){
